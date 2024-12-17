@@ -159,6 +159,13 @@ $pathToExternals['rar'] = '';
 $pathToExternals['7zip'] = '/usr/bin/7z';
 
 $config['debug'] = false;
+
+// slower workaround using rTask to support unicode emoji characters.
+// temporary till it gets fixed in rtorrent upstreams
+// issue: https://github.com/rakshasa/rtorrent/pull/1309
+// set to false for utf8 with no emoji chars support
+$config['unicode_emoji_fix'] = true;
+
 $config['mkdperm'] = 755; // default permission to set to new created directories
 
 $config['textExtensions'] = 'log|txt|nfo|sfv|xml|html';
@@ -194,7 +201,7 @@ $config['archive']['type']['tar.xz'] = $config['archive']['type']['tar'];
 $config['archive']['type']['tar.gz']['multipass'] = ['tar', 'gzip'];
 $config['archive']['type']['tar.bz2']['multipass'] = ['tar', 'bzip2'];
 $config['archive']['type']['tar.7z']['multipass'] = ['tar', '7z'];
-$config['archive']['type']['tar.xz']['multipass'] = ['tar', 'xz'];        
+$config['archive']['type']['tar.xz']['multipass'] = ['tar', 'xz'];     
 RUFMC
     fi
 }
