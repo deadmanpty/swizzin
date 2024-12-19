@@ -102,7 +102,7 @@ function depends_rtorrent() {
     if [[ ! $rtorrentver == repo ]]; then
         APT='subversion dos2unix bc screen zip unzip build-essential comerr-dev
     automake libtool libcppunit-dev libssl-dev pkg-config libcurl4-openssl-dev
-    libsigc++-2.0-dev unzip curl libncurses5-dev yasm mediainfo autoconf-archive'
+    libsigc++-2.0-dev unzip curl libncurses5-dev mediainfo autoconf-archive'
         apt_install $APT
 
         . /etc/swizzin/sources/functions/fpm
