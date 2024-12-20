@@ -14,7 +14,8 @@ function whiptail_rtorrent() {
             0.10.0 "" \
             0.9.8 "" \
             stickz "(stickz)" \
-            PGO "(0.9.8)" \ 3>&1 1>&2 2>&3) || {
+            PGO "(0.9.8)" \
+            Repo "(${repov})" 3>&1 1>&2 2>&3) || {
             echo_error "rTorrent version choice aborted"
             exit 1
         }
@@ -60,6 +61,13 @@ function set_rtorrent_version() {
             export libtorrentver='0.13.8'
             export libudns='true'
             export rtorrentpgo='true'
+            ;;
+
+        Repo | 'Repo')
+            export rtorrentver='repo'
+            export libtorrentver='repo'
+            export libudns='false'
+            export rtorrentpgo='false'
             ;;
         *)
             echo_error "$1 is not a valid rTorrent version"
