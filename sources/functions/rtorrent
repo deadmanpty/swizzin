@@ -310,7 +310,6 @@ function build_rtorrent_new() {
 }
 
 function install_rtorrent_stickz() {
-    cd "/tmp" && git clone https://github.com/stickz/rtorrent/
     cd "/tmp/rtorrent/rtorrent"
     . /etc/swizzin/sources/functions/utils
 
