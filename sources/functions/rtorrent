@@ -54,7 +54,7 @@ function set_rtorrent_version() {
         stickz | 'stickz')
             export rtorrentver='0.9.8-stickz'
             export libtorrentver='0.13.8-stickz'
-            export libudns='false'
+            export libudns='true'
             export rtorrentpgo='true'
             ;;
 	
