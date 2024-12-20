@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function rutorrent_install() {
-    apt_install geoip-database p7zip-full zip unzip php-bcmath
+    apt_install sox geoip-database p7zip-full zip unzip php-bcmath
 
     mkdir -p /srv
     if [[ ! -d /srv/rutorrent ]]; then
@@ -26,6 +26,7 @@ function rutorrent_install() {
     echo_progress_start "Cloning some popular themes and plugins"
     sed -i 's/useExternal = false;/useExternal = "mktorrent";/' /srv/rutorrent/plugins/create/conf.php
     sed -i 's/pathToCreatetorrent = '\'\''/pathToCreatetorrent = '\''\/usr\/bin\/mktorrent'\''/' /srv/rutorrent/plugins/create/conf.php
+    sed -i "s/\$pathToExternals\['sox'\] = ''/\$pathToExternals\['sox'\] = '\/usr\/bin\/sox'/g" /srv/rutorrent/plugins/spectrogram/conf.php
 
     . /etc/swizzin/sources/functions/utils
     install_rar
