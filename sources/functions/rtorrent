@@ -341,7 +341,7 @@ function install_rtorrent_stickz() {
     . /etc/swizzin/sources/functions/utils
 
     ./autogen.sh >> $log 2>&1
-    ./configure --prefix=/usr --with-xmlrpc-c --with-ncurses >> $log 2>&1 || {
+    ./configure --prefix=/usr --with-xmlrpc-c >> $log 2>&1 || {
         echo_error "Something went wrong while configuring rtorrent"
         exit 1
     }
