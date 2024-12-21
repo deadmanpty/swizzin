@@ -169,8 +169,8 @@ function build_xmlrpc-c() {
     rm_if_exists "/tmp/dist/xmlrpc-c "
     svn checkout svn://svn.code.sf.net/p/xmlrpc-c/code/super_stable /tmp/xmlrpc-c >> $log 2>&1;
     cd /tmp/xmlrpc-c
-    cp -rf /etc/swizzin/sources/patches/rtorrent/xmlrpc-config.guess config.guess >> $log 2>&1
-    cp -rf /etc/swizzin/sources/patches/rtorrent/xmlrpc-config.sub config.sub >> $log 2>&1
+    #cp -rf /etc/swizzin/sources/patches/rtorrent/xmlrpc-config.guess config.guess >> $log 2>&1
+    #cp -rf /etc/swizzin/sources/patches/rtorrent/xmlrpc-config.sub config.sub >> $log 2>&1
     ./configure --prefix=/usr --disable-cplusplus --disable-wininet-client --disable-libwww-client --disable-abyss-server --disable-cgi-server >> $log 2>&1 || {
         echo_error "Something went wrong while configuring xmlrpc"
         exit 1
@@ -341,19 +341,8 @@ function install_rtorrent_stickz() {
     cd "/tmp/rtorrent/rtorrent"
     . /etc/swizzin/sources/functions/utils
 
-    #apply lockfile-fix to all rtorrents
-    #patch -p1 < /etc/swizzin/sources/patches/rtorrent/lockfile-fix.patch >> "$log" 2>&1
-    #apply xmlrpc-fix to all rtorrents
-    #patch -p1 < /etc/swizzin/sources/patches/rtorrent/xmlrpc-fix.patch >> "$log" 2>&1
-    #apply xmlrpc-logic-fix to all rtorrents
-    #patch -p1 < /etc/swizzin/sources/patches/rtorrent/xmlrpc-logic-fix.patch >> "$log" 2>&1
-    #apply scgi-fix to all rtorrents
-    #patch -p1 < /etc/swizzin/sources/patches/rtorrent/scgi-fix.patch >> "$log" 2>&1
-    #apply session-file-fix to all rtorrents
-    #patch -p1 < /etc/swizzin/sources/patches/rtorrent/session-file-fix.patch >> "$log" 2>&1
-
     ./autogen.sh >> $log 2>&1
-    ./configure --prefix=/usr --with-xmlrpc-c >> $log 2>&1 || {
+    ./configure --prefix=/usr --with-xmlrpc-c --with-ncurses >> $log 2>&1 || {
         echo_error "Something went wrong while configuring rtorrent"
         exit 1
     }
