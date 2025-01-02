@@ -77,7 +77,7 @@ EOF
 }
 
 function _makedirs() {
-    mkdir -p /home/${user}/torrents/rtorrent 2>> $log
+    mkdir -p /home/${user}/torrents/downloads 2>> $log
     mkdir -p /home/${user}/.sessions
     mkdir -p /home/${user}/rwatch
     chown -R ${user}:${user} /home/${user}/{torrents,.sessions,rwatch} 2>> $log
