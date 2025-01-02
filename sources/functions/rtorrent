@@ -277,8 +277,8 @@ function install_libtorrent_stickz() {
         exit 1
     }
     make install >> $log 2>&1
-    rm -rf rtorrent
     cd /tmp
+    rm -rf rtorrent
 }
 
 function build_rtorrent() {
@@ -340,6 +340,8 @@ function install_rtorrent_stickz() {
     }
 	
     apt-mark hold rtorrent >> ${log} 2>&1
+    cd /tmp
+    rm -rf rtorrent
 }
 
 function build_rtorrent_old() {
