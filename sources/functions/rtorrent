@@ -13,8 +13,6 @@ function whiptail_rtorrent() {
         function=$(whiptail --title "Choose an rTorrent version" --menu "All versions other than repo will be locally compiled from source" --ok-button "Continue" 14 50 5 \
             0.10.0 "" \
             0.9.8 "" \
-            0.9.7 "" \
-            0.9.6 "" \
             stickz "(stickz)" \
             PGO "(0.9.8)" \
             Repo "(${repov})" 3>&1 1>&2 2>&3) || {
@@ -30,20 +28,6 @@ function whiptail_rtorrent() {
 
 function set_rtorrent_version() {
 	case $1 in
-        0.9.6 | '0.9.6')
-            export rtorrentver='0.9.6'
-            export libtorrentver='0.13.6'
-            export libudns='false'
-            export rtorrentpgo='false'
-            ;;
-
-        0.9.7 | '0.9.7')
-            export rtorrentver='0.9.7'
-            export libtorrentver='0.13.7'
-            export libudns='false'
-            export rtorrentpgo='false'
-            ;;
-
         0.9.8 | '0.9.8')
             export rtorrentver='0.9.8'
             export libtorrentver='0.13.8'
@@ -231,16 +215,6 @@ function build_libtorrent_rakshasa_old() {
     if [[ ${libtorrentver} =~ ^("0.13.7"|"0.13.8")$ ]]; then
         patch -p1 < /etc/swizzin/sources/patches/rtorrent/throttle-fix-0.13.7-8.patch >> "$log" 2>&1
     fi
-    if [[ ${libtorrentver} =~ ^("0.13.6"|"0.13.7")$ ]]; then
-        patch -p1 < /etc/swizzin/sources/patches/rtorrent/openssl.patch >> "$log" 2>&1
-        if pkg-config --atleast-version=1.14 cppunit && [[ ${libtorrentver} == 0.13.6 ]]; then
-            patch -p1 < /etc/swizzin/sources/patches/rtorrent/cppunit-libtorrent.patch >> "$log" 2>&1
-        fi
-        if [[ ${libtorrentver} == "0.13.6" ]]; then
-            patch -p1 < /etc/swizzin/sources/patches/rtorrent/bencode-libtorrent.patch >> "$log" 2>&1
-            patch -p1 < /etc/swizzin/sources/patches/rtorrent/throttle-fix-0.13.6.patch >> "$log" 2>&1
-        fi
-    fi
     ./autogen.sh >> $log 2>&1
     ./configure --prefix=/usr --enable-aligned >> $log 2>&1 || {
         echo_error "Something went wrong while configuring libtorrent"
@@ -396,12 +370,6 @@ function build_rtorrent_old() {
     patch -p1 < /etc/swizzin/sources/patches/rtorrent/scgi-fix.patch >> "$log" 2>&1
     #apply session-file-fix to all rtorrents
     patch -p1 < /etc/swizzin/sources/patches/rtorrent/session-file-fix.patch >> "$log" 2>&1
-    #use pkgconfig for cppunit if 0.9.6
-    stdc=
-    if [[ ${rtorrentver} == "0.9.6" ]]; then
-        patch -p1 < /etc/swizzin/sources/patches/rtorrent/rtorrent-0.9.6.patch >> "$log" 2>&1
-        stdc="-std=c++11"
-    fi
     ./autogen.sh >> $log 2>&1
     ./configure --prefix=/usr --with-xmlrpc-c >> $log 2>&1 || {
         echo_error "Something went wrong while configuring rtorrent"
