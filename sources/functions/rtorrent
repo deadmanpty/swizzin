@@ -340,7 +340,7 @@ function install_rtorrent_stickz() {
         echo_error "Something went wrong while making rtorrent"
         exit 1
     }
-	
+	    make install >> $log 2>&1
     apt-mark hold rtorrent >> ${log} 2>&1
     cd /tmp
     rm -rf rtorrent
