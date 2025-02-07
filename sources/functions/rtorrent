@@ -39,7 +39,7 @@ function set_rtorrent_version() {
             export rtorrentver='0.9.8-stickz'
             export libtorrentver='0.13.8-stickz'
             export libudns='true'
-            export rtorrentpgo='true'
+            export rtorrentpgo='false'
             ;;
 	
         0.10.0 | '0.10.0')
