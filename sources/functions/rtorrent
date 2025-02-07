@@ -39,7 +39,7 @@ function set_rtorrent_version() {
             export rtorrentver='0.9.8-stickz'
             export libtorrentver='0.13.8-stickz'
             export libudns='true'
-            export rtorrentpgo='false'
+            export rtorrentpgo='true'
             ;;
 	
         0.10.0 | '0.10.0')
@@ -340,7 +340,7 @@ function install_rtorrent_stickz() {
         echo_error "Something went wrong while making rtorrent"
         exit 1
     }
-	    make install >> $log 2>&1
+	# non-pgo make install >> $log 2>&1
     apt-mark hold rtorrent >> ${log} 2>&1
     cd /tmp
     rm -rf rtorrent
