@@ -284,7 +284,7 @@ function install_libtorrent_stickz() {
 }
 
 function build_rtorrent() {
-    if [[ ${rtorrentver} == "0.10.0" ]]; then
+    if [[ ${rtorrentver} == "0.15.1" ]]; then
         build_rtorrent_new
     elif [[ ${rtorrentver} == "0.9.8-stickz" ]]; then
         install_rtorrent_stickz
@@ -400,7 +400,7 @@ function build_rtorrent_old() {
 }
 
 function download_rtorrent() {
-    rtorrentloc="https://github.com/rakshasa/rtorrent/archive/refs/tags/${rtorrentver}.tar.gz"
+    rtorrentloc="https://github.com/rakshasa/rtorrent/archive/refs/tags/v${rtorrentver}.tar.gz"
     cd "/tmp"
     . /etc/swizzin/sources/functions/utils
     rm_if_exists "/tmp/rtorrent*"
