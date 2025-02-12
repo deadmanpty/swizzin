@@ -42,9 +42,9 @@ function set_rtorrent_version() {
             export rtorrentpgo='true'
             ;;
 	
-        0.10.0 | '0.10.0')
-            export rtorrentver='0.10.0'
-            export libtorrentver='0.14.0'
+        0.15.1 | '0.15.1')
+            export rtorrentver='0.15.1'
+            export libtorrentver='0.15.1'
             export libudns='false'
             export rtorrentpgo='false'
             ;;
@@ -175,7 +175,7 @@ function depends_rtorrent() {
 #}
 
 function build_libtorrent_rakshasa() {
-    if [[ ${libtorrentver} == "0.14.0" ]]; then
+    if [[ ${libtorrentver} == "0.15.1" ]]; then
         build_libtorrent_rakshasa_new
     elif [[ ${libtorrentver} == "0.13.8-stickz" ]]; then
         install_libtorrent_stickz
@@ -299,7 +299,7 @@ function build_rtorrent_new() {
     auto_patch_rtorrent
 	
     autoreconf -vfi >> $log 2>&1	
-    ./configure --prefix=/usr --with-xmlrpc-c >> $log 2>&1 || {
+    ./configure --prefix=/usr --with-xmlrpc-tinyxml2 >> $log 2>&1 || {
         echo_error "Something went wrong while configuring rtorrent"
         exit 1
     }
