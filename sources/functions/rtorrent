@@ -400,7 +400,7 @@ function build_rtorrent_old() {
 }
 
 function download_rtorrent() {
-    rtorrentloc="https://github.com/rakshasa/rtorrent/archive/refs/tags/v${rtorrentver}.tar.gz"
+    rtorrentloc="https://github.com/rakshasa/rtorrent/archive/refs/tags/${rtorrentver}.tar.gz"
     cd "/tmp"
     . /etc/swizzin/sources/functions/utils
     rm_if_exists "/tmp/rtorrent*"
