@@ -11,7 +11,7 @@ function whiptail_rtorrent() {
         whiptail --title "rTorrent Install Advisory" --msgbox "We recommend rTorrent version selection instead of repo (distro) releases. They will compile additional performance and stability improvements in 90s. UDNS includes a stability patch for UDP trackers on rTorrent." 15 50
 
         function=$(whiptail --title "Choose an rTorrent version" --menu "All versions other than repo will be locally compiled from source" --ok-button "Continue" 14 50 5 \
-            0.10.0 "" \
+            0.15.1 "" \
             0.9.8 "" \
             stickz "(stickz)" \
             PGO "(0.9.8)" \
