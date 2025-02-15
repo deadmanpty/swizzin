@@ -327,7 +327,7 @@ function install_rtorrent_stickz() {
         echo_error "Something went wrong while configuring rtorrent"
         exit 1
     }
-    make -j$(nproc) CXXFLAGS="-w ${rtorrentlevel} ${rtorrentflto} ${rtorrentpipe} ${stdc} ${rtorrentprofile}" >> $log 2>&1 || {
+    make -j$(nproc) CXXFLAGS="-w ${rtorrentlevel} ${rtorrentflto} ${rtorrentpipe}" >> $log 2>&1 || {
         echo_error "Something went wrong while making rtorrent"
         exit 1
     }
