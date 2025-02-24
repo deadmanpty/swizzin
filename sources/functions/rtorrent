@@ -254,9 +254,9 @@ function install_libtorrent_rakshasa() {
 }
 
 function install_libtorrent_stickz() {
-    cd "/tmp" && git clone https://github.com/stickz/rtorrent/
+    cd "/tmp" && git clone https://github.com/stickz/rtorrent/libtorrent/
     . /etc/swizzin/sources/functions/utils
-    cd /tmp/rtorrent/libtorrent >> $log 2>&1
+    cd /tmp/libtorrent >> $log 2>&1
     ./autogen.sh >> $log 2>&1
     ./configure --prefix=/usr --enable-aligned --enable-hosted-mode --enable-udns >> $log 2>&1 || {
         echo_error "Something went wrong while configuring libtorrent"
@@ -268,7 +268,7 @@ function install_libtorrent_stickz() {
     }
     make install >> $log 2>&1
     cd /tmp
-    rm -rf rtorrent
+    rm -rf libtorrent
 }
 
 function build_rtorrent() {
@@ -312,9 +312,9 @@ function build_rtorrent_new() {
 }
 
 function install_rtorrent_stickz() {
-    cd "/tmp" && git clone https://github.com/stickz/rtorrent/
+    cd "/tmp" && git clone https://github.com/stickz/rtorrent/rtorrent/
     . /etc/swizzin/sources/functions/utils
-    cd /tmp/rtorrent/rtorrent >> $log 2>&1
+    cd /tmp/rtorrent >> $log 2>&1
     ./autogen.sh >> $log 2>&1
     ./configure --prefix=/usr --with-xmlrpc-tinyxml2 >> $log 2>&1 || {
         echo_error "Something went wrong while configuring rtorrent"
