@@ -268,7 +268,6 @@ function install_libtorrent_stickz() {
     }
     make install >> $log 2>&1
     cd /tmp
-    rm -rf rtorrent
 }
 
 function build_rtorrent() {
@@ -312,8 +311,6 @@ function build_rtorrent_new() {
 }
 
 function install_rtorrent_stickz() {
-    cd "/tmp" && git clone https://github.com/stickz/rtorrent/
-    . /etc/swizzin/sources/functions/utils
     cd /tmp/rtorrent/rtorrent >> $log 2>&1
     ./autogen.sh >> $log 2>&1
     ./configure --prefix=/usr --with-xmlrpc-tinyxml2 >> $log 2>&1 || {
