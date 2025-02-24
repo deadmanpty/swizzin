@@ -297,7 +297,7 @@ function build_rtorrent_new() {
             echo_error "Something went wrong while configuring rtorrent 0.10.0 with xmlrpc-c"
             exit 1
         }
-    else
+    elif [[ ${rtorrentver} == "0.15.1" ]]; then
         ./configure --prefix=/usr --with-xmlrpc-tinyxml2 >> $log 2>&1 || {
             echo_error "Something went wrong while configuring rtorrent with tinyxml2"
             exit 1
