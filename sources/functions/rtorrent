@@ -13,7 +13,7 @@ function whiptail_rtorrent() {
         function=$(whiptail --title "Choose an rTorrent version" --menu "All versions other than repo will be locally compiled from source" --ok-button "Continue" 14 50 5 \
             0.15.1 "" \
             0.10.0 "" \
-            stickz "(stickz)" \
+            stickz "(0.9.8-stickz)" \
             UDNS "(0.9.8)" \
             Repo "(${repov})" 3>&1 1>&2 2>&3) || {
             echo_error "rTorrent version choice aborted"
@@ -254,9 +254,9 @@ function install_libtorrent_rakshasa() {
 }
 
 function install_libtorrent_stickz() {
-    cd "/tmp" && git clone https://github.com/stickz/rtorrent/libtorrent/
+    cd "/tmp" && git clone https://github.com/stickz/rtorrent/
     . /etc/swizzin/sources/functions/utils
-    cd /tmp/libtorrent >> $log 2>&1
+    cd /tmp/rtorrent/libtorrent >> $log 2>&1
     ./autogen.sh >> $log 2>&1
     ./configure --prefix=/usr --enable-aligned --enable-hosted-mode --enable-udns >> $log 2>&1 || {
         echo_error "Something went wrong while configuring libtorrent"
@@ -268,7 +268,7 @@ function install_libtorrent_stickz() {
     }
     make install >> $log 2>&1
     cd /tmp
-    rm -rf libtorrent
+    rm -rf rtorrent
 }
 
 function build_rtorrent() {
@@ -312,9 +312,9 @@ function build_rtorrent_new() {
 }
 
 function install_rtorrent_stickz() {
-    cd "/tmp" && git clone https://github.com/stickz/rtorrent/rtorrent/
+    cd "/tmp" && git clone https://github.com/stickz/rtorrent/
     . /etc/swizzin/sources/functions/utils
-    cd /tmp/rtorrent >> $log 2>&1
+    cd /tmp/rtorrent/rtorrent >> $log 2>&1
     ./autogen.sh >> $log 2>&1
     ./configure --prefix=/usr --with-xmlrpc-tinyxml2 >> $log 2>&1 || {
         echo_error "Something went wrong while configuring rtorrent"
