@@ -26,8 +26,8 @@ schedule = watch_directory,5,5,load.start=/home/${user}/rwatch/*.torrent
 session.path.set = /home/${user}/.sessions/
 throttle.global_down.max_rate.set = 0
 throttle.global_up.max_rate.set = 0
-throttle.max_downloads.global.set = 1000
-throttle.max_uploads.global.set = 2000
+throttle.max_downloads.global.set = 600
+throttle.max_uploads.global.set = 1000
 throttle.max_peers.normal.set = 25
 throttle.min_peers.normal.set = 10
 throttle.max_peers.seed.set = 25
