@@ -129,7 +129,7 @@ function depends_rtorrent() {
 }
 
 function build_xmlrpc-c() {    
-    if [[ ! ${rtorrentver} == "0.15.1" || ! ${rtorrentver} == "0.9.8-stickz" ]]; then
+    if [[ ! ${rtorrentver} == "0.15.1" ]]; then
         build_xmlrpc-c_old
     fi
 }
