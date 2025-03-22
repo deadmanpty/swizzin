@@ -106,10 +106,6 @@ function depends_rtorrent() {
     fi
 }
 
-function build_xmlrpc-c() {    
-    if [[ ! ${rtorrentver} == "0.15.1" || ${rtorrentver} == "0.9.8-stickz" ]]; 
-    fi
-}
 
 function build_libtorrent_rakshasa() {
     if [[ ${libtorrentver} == "0.15.1" ]]; then
