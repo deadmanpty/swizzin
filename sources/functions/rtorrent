@@ -12,10 +12,7 @@ function whiptail_rtorrent() {
 
         function=$(whiptail --title "Choose an rTorrent version" --menu "All versions other than repo will be locally compiled from source" --ok-button "Continue" 14 50 5 \
             0.15.1 "" \
-            0.10.0 "" \
-            stickz "(0.9.8-stickz)" \
-            UDNS "(0.9.8)" \
-            Repo "(${repov})" 3>&1 1>&2 2>&3) || {
+            stickz "(0.9.8-stickz)" 3>&1 1>&2 2>&3) || {
             echo_error "rTorrent version choice aborted"
             exit 1
         }
@@ -34,30 +31,11 @@ function set_rtorrent_version() {
             export libudns='true'
             ;;
 	
-        0.10.0 | '0.10.0')
-            export rtorrentver='0.10.0'
-            export libtorrentver='0.14.0'
-            export libudns='false'
-            ;;
-
         0.15.1 | '0.15.1')
             export rtorrentver='0.15.1'
             export libtorrentver='0.15.1'
             export libudns='false'
             ;;
-
-        UDNS | 'UDNS')
-            export rtorrentver='0.9.8'
-            export libtorrentver='0.13.8'
-            export libudns='true'
-            ;;
-
-        Repo | 'Repo')
-            export rtorrentver='repo'
-            export libtorrentver='repo'
-            export libudns='false'
-            ;;
-
         *)
             echo_error "$1 is not a valid rTorrent version"
             exit 1
@@ -129,46 +107,15 @@ function depends_rtorrent() {
 }
 
 function build_xmlrpc-c() {    
-    if [[ ! ${rtorrentver} == "0.15.1" || ${rtorrentver} == "0.9.8-stickz" ]]; then
-        build_xmlrpc-c_old
+    if [[ ! ${rtorrentver} == "0.15.1" || ${rtorrentver} == "0.9.8-stickz" ]]; 
     fi
 }
 
-function build_xmlrpc-c_old() {
-    cd "/tmp"
-    . /etc/swizzin/sources/functions/utils
-    rm_if_exists "/tmp/xmlrpc-c"
-    rm_if_exists "/tmp/dist/xmlrpc-c "
-    svn checkout svn://svn.code.sf.net/p/xmlrpc-c/code/super_stable /tmp/xmlrpc-c >> $log 2>&1;
-    cd /tmp/xmlrpc-c
-    cp -rf /etc/swizzin/sources/patches/rtorrent/xmlrpc-config.guess config.guess >> $log 2>&1
-    cp -rf /etc/swizzin/sources/patches/rtorrent/xmlrpc-config.sub config.sub >> $log 2>&1
-    ./configure --prefix=/usr --disable-cplusplus --disable-wininet-client --disable-libwww-client --disable-abyss-server --disable-cgi-server >> $log 2>&1 || {
-        echo_error "Something went wrong while configuring xmlrpc"
-        exit 1
-    }
-    source <(sed 's/ //g' version.mk)
-    VERSION=$XMLRPC_MAJOR_RELEASE.$XMLRPC_MINOR_RELEASE.$XMLRPC_POINT_RELEASE
-    make -j$(nproc) CFLAGS="-w ${rtorrentlevel} ${rtorrentflto} ${rtorrentpipe}" >> $log 2>&1
-    make DESTDIR=/tmp/dist/xmlrpc-c install >> $log 2>&1 || {
-        echo_error "Something went wrong while making xmlrpc"
-        exit 1
-    }
-    mkdir -p /root/dist
-    fpm -f -C /tmp/dist/xmlrpc-c -p /root/dist/xmlrpc-c_VERSION.deb -s dir -t deb -n xmlrpc-c --version ${VERSION} --description "xmlrpc-c compiled by swizzin" > /dev/null 2>&1
-    dpkg -i /root/dist/xmlrpc-c_${VERSION}.deb >> $log 2>&1
-    cd /tmp
-    rm -rf xmlrpc-c
-    rm -rf /tmp/dist/xmlrpc-c
-}
-
 function build_libtorrent_rakshasa() {
-    if [[ ${libtorrentver} == "0.14.0" || ${libtorrentver} == "0.15.1" ]]; then
+    if [[ ${libtorrentver} == "0.15.1" ]]; then
         build_libtorrent_rakshasa_new
     elif [[ ${libtorrentver} == "0.13.8-stickz" ]]; then
         install_libtorrent_stickz
-    else
-        build_libtorrent_rakshasa_old
     fi
 }
 
@@ -190,31 +137,6 @@ function build_libtorrent_rakshasa_new() {
     install_libtorrent_rakshasa
 }
 
-function build_libtorrent_rakshasa_old() {
-    . /etc/swizzin/sources/functions/utils
-    download_libtorrent_rakshasa
-    auto_patch_libtorrent_rakshasa
-
-    if [[ ${libudns} == "true" ]]; then
-        patch -p1 < /etc/swizzin/sources/patches/rtorrent/libtorrent-udns-0.13.8.patch >> "$log" 2>&1
-        patch -p1 < /etc/swizzin/sources/patches/rtorrent/libtorrent-scanf-0.13.8.patch >> "$log" 2>&1
-        patch -p1 < /etc/swizzin/sources/patches/rtorrent/lookup-cache-0.13.8.patch >> "$log" 2>&1
-    fi
-    if [[ ${libtorrentver} =~ ^("0.13.7"|"0.13.8")$ ]]; then
-        patch -p1 < /etc/swizzin/sources/patches/rtorrent/throttle-fix-0.13.7-8.patch >> "$log" 2>&1
-    fi
-    ./autogen.sh >> $log 2>&1
-    ./configure --prefix=/usr --enable-aligned >> $log 2>&1 || {
-        echo_error "Something went wrong while configuring libtorrent"
-        exit 1
-    }
-    make -j$(nproc) CXXFLAGS="-w ${rtorrentlevel} ${rtorrentflto} ${rtorrentpipe}" >> $log 2>&1 || {
-        echo_error "Something went wrong while making libtorrent"
-        exit 1
-    }
-
-    install_libtorrent_rakshasa
-}
 
 function download_libtorrent_rakshasa() {
     libtorrentloc="https://github.com/rakshasa/libtorrent/archive/refs/tags/v${libtorrentver}.tar.gz"
@@ -271,12 +193,10 @@ function install_libtorrent_stickz() {
 }
 
 function build_rtorrent() {
-    if [[ ${rtorrentver} == "0.10.0" || ${rtorrentver} == "0.15.1" ]]; then
+    if [[ ${rtorrentver} == "0.15.1" ]]; then
         build_rtorrent_new
     elif [[ ${rtorrentver} == "0.9.8-stickz" ]]; then
         install_rtorrent_stickz
-    else
-        build_rtorrent_old
     fi
 }
 
@@ -285,18 +205,9 @@ function build_rtorrent_new() {
     download_rtorrent
     auto_patch_rtorrent
 
-    if [[ ${rtorrentver} == "0.10.0" ]]; then
-        patch -p1 < /etc/swizzin/sources/patches/rtorrent/1310-scgi-fix.patch >> "$log" 2>&1
-    fi
-
     autoreconf -vfi >> $log 2>&1
 
-    if [[ ${rtorrentver} == "0.10.0" ]]; then
-        ./configure --prefix=/usr --with-xmlrpc-c >> $log 2>&1 || {
-            echo_error "Something went wrong while configuring rtorrent 0.10.0 with xmlrpc-c"
-            exit 1
-        }
-    elif [[ ${rtorrentver} == "0.15.1" ]]; then
+    if [[ ${rtorrentver} == "0.15.1" ]]; then
         ./configure --prefix=/usr --with-xmlrpc-tinyxml2 >> $log 2>&1 || {
             echo_error "Something went wrong while configuring rtorrent with tinyxml2"
             exit 1
@@ -325,46 +236,6 @@ function install_rtorrent_stickz() {
     apt-mark hold rtorrent >> ${log} 2>&1
     cd /tmp
     rm -rf rtorrent
-}
-
-function build_rtorrent_old() {
-    download_rtorrent
-    auto_patch_rtorrent
-	
-    #apply memory leak fixes to 0.9.8 branches bases only (0.9.8, UDNS, PGO) to reduce maintenance and testing
-    #apply first thing to ensure compatibility with the tracker delay scrape patch by modifying higher line numbers first
-    if [[ ${rtorrentver} == "0.9.8" ]]; then
-        patch -p1 < /etc/swizzin/sources/patches/rtorrent/rtorrent-ml-fixes-0.9.8.patch >> "$log" 2>&1
-    fi
-    #apply tracker delay scrape patch to UDNS branch	
-    if [[ ${libudns} == "true" ]]; then
-        patch -p1 < /etc/swizzin/sources/patches/rtorrent/rtorrent-scrape-0.9.8.patch >> "$log" 2>&1
-        patch -p1 < /etc/swizzin/sources/patches/rtorrent/fast-session-loading-0.9.8.patch >> "$log" 2>&1
-    fi
-    #apply lockfile-fix to all rtorrents
-    patch -p1 < /etc/swizzin/sources/patches/rtorrent/lockfile-fix.patch >> "$log" 2>&1
-    #apply xmlrpc-fix to all rtorrents
-    patch -p1 < /etc/swizzin/sources/patches/rtorrent/xmlrpc-fix.patch >> "$log" 2>&1
-    #apply xmlrpc-logic-fix to all rtorrents
-    patch -p1 < /etc/swizzin/sources/patches/rtorrent/xmlrpc-logic-fix.patch >> "$log" 2>&1
-    #apply scgi-fix to all rtorrents
-    patch -p1 < /etc/swizzin/sources/patches/rtorrent/scgi-fix.patch >> "$log" 2>&1
-    #apply session-file-fix to all rtorrents
-    patch -p1 < /etc/swizzin/sources/patches/rtorrent/session-file-fix.patch >> "$log" 2>&1
-    #use pkgconfig for cppunit if 0.9.6
-    stdc=
- 
-    ./autogen.sh >> $log 2>&1
-    ./configure --prefix=/usr --with-xmlrpc-c >> $log 2>&1 || {
-        echo_error "Something went wrong while configuring rtorrent"
-        exit 1
-    }
-    make -j$(nproc) CXXFLAGS="-w ${rtorrentlevel} ${rtorrentflto} ${rtorrentpipe} ${stdc}" >> $log 2>&1 || {
-        echo_error "Something went wrong while making rtorrent"
-        exit 1
-    }
-
-    install_rtorrent
 }
 
 function download_rtorrent() {
