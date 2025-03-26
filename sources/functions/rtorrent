@@ -12,8 +12,7 @@ function whiptail_rtorrent() {
 
         function=$(whiptail --title "Choose an rTorrent version" --menu "All versions other than repo will be locally compiled from source" --ok-button "Continue" 14 50 5 \
             0.15.1 "" \
-            stickz "(0.9.8-stickz)" \
-            Repo "(${repov})" 3>&1 1>&2 2>&3) || {
+            stickz "(0.9.8-stickz)" 3>&1 1>&2 2>&3) || {
             echo_error "rTorrent version choice aborted"
             exit 1
         }
@@ -35,12 +34,6 @@ function set_rtorrent_version() {
         0.15.1 | '0.15.1')
             export rtorrentver='0.15.1'
             export libtorrentver='0.15.1'
-            export libudns='false'
-            ;;
-
-        Repo | 'Repo')
-            export rtorrentver='repo'
-            export libtorrentver='repo'
             export libudns='false'
             ;;
 
@@ -76,18 +69,13 @@ function configure_rtorrent() {
 }
 
 function depends_rtorrent() {
-    if [[ ! $rtorrentver == repo ]]; then
-        APT='subversion dos2unix bc screen zip unzip build-essential comerr-dev
+    APT='subversion dos2unix bc screen zip unzip build-essential comerr-dev
     automake libtool libcppunit-dev libssl-dev pkg-config libcurl4-openssl-dev
     libsigc++-2.0-dev libncurses5-dev mediainfo yasm autoconf-archive'
         apt_install $APT
 
         . /etc/swizzin/sources/functions/fpm
         install_fpm
-    else
-        APT='screen zip unzip bc mediainfo curl'
-        apt_install $APT
-    fi
 
     # mktorrent from source
     cd /tmp
