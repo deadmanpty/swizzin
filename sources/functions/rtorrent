@@ -235,7 +235,7 @@ function build_rtorrent_old() {
     auto_patch_rtorrent
     stdc=
     ./autogen.sh >> $log 2>&1
-    ./configure --prefix=/usr --with-xmlrpc-c >> $log 2>&1 || {
+    ./configure --prefix=/usr --with-xmlrpc-tinyxml2 >> $log 2>&1 || {
         echo_error "Something went wrong while configuring rtorrent"
         exit 1
     }
