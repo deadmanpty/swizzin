@@ -113,6 +113,8 @@ server {
   listen 80 default_server;
   listen [::]:80 default_server;
   server_name _;
+  client_max_body_size 40M;
+  client_body_buffer_size 128k;
   server_tokens off;
 
   location /.well-known {
@@ -120,6 +122,8 @@ server {
     allow all;
     default_type "text/plain";
     autoindex    on;
+    client_max_body_size 40M;
+    client_body_buffer_size 128k;
   }
 
   location / {
