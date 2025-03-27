@@ -87,7 +87,7 @@ for version in $phpv; do
         -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" \
         -e "s/;opcache.enable=0/opcache.enable=1/" \
         -e "s/;opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=16/" \
-        -e "s/;opcache.memory_consumption=64/opcache.memory_consumption=192/" \
+        -e "s/;opcache.memory_consumption=128/opcache.memory_consumption=192/" \
         -e "s/;opcache.max_accelerated_files=2000/opcache.max_accelerated_files=10000/" \
         -e "s/;opcache.revalidate_freq=2/opcache.revalidate_freq=240/" /etc/php/$version/fpm/php.ini
     phpenmod -v $version opcache
