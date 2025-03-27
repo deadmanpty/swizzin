@@ -80,15 +80,15 @@ cd /etc/php
 phpv=$(ls -d */ | cut -d/ -f1)
 echo_progress_start "Making adjustments to PHP"
 for version in $phpv; do
-    sed -i -e "s/post_max_size = 8M/post_max_size = 64M/" \
-        -e "s/upload_max_filesize = 2M/upload_max_filesize = 92M/" \
+    sed -i -e "s/post_max_size = 8M/post_max_size = 72M/" \
+        -e "s/upload_max_filesize = 2M/upload_max_filesize = 96M/" \
         -e "s/expose_php = On/expose_php = Off/" \
         -e "s/128M/896M/" \
         -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" \
-        -e "s/;opcache.enable=0/opcache.enable=1/" \
+        -e "s/;opcache.enable=1/opcache.enable=1/" \
         -e "s/;opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=16/" \
         -e "s/;opcache.memory_consumption=128/opcache.memory_consumption=192/" \
-        -e "s/;opcache.max_accelerated_files=2000/opcache.max_accelerated_files=10000/" \
+        -e "s/;opcache.max_accelerated_files=10000/opcache.max_accelerated_files=9600/" \
         -e "s/;opcache.revalidate_freq=2/opcache.revalidate_freq=240/" /etc/php/$version/fpm/php.ini
     phpenmod -v $version opcache
     sed -i 's/;env\[PATH\]/env[PATH]/g' /etc/php/$version/fpm/pool.d/www.conf
