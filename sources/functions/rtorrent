@@ -139,10 +139,8 @@ function build_xmlrpc-c_old() {
 function build_libtorrent_rakshasa() {
     if [[ ${libtorrentver} == "0.15.1" ]]; then
         build_libtorrent_rakshasa_new
-    elif [[ ${libtorrentver} == "0.13.8-stickz" ]]; then
-        install_libtorrent_stickz
     else
-        build_libtorrent_rakshasa_old
+        install_libtorrent_stickz
     fi
 }
 
@@ -152,24 +150,6 @@ function build_libtorrent_rakshasa_new() {
     auto_patch_libtorrent_rakshasa
 
     autoreconf -vfi >> $log 2>&1
-    ./configure --prefix=/usr --enable-aligned >> $log 2>&1 || {
-        echo_error "Something went wrong while configuring libtorrent"
-        exit 1
-    }
-    make -j$(nproc) CXXFLAGS="-w ${rtorrentlevel} ${rtorrentflto} ${rtorrentpipe}" >> $log 2>&1 || {
-        echo_error "Something went wrong while making libtorrent"
-        exit 1
-    }
-
-    install_libtorrent_rakshasa
-}
-
-function build_libtorrent_rakshasa_old() {
-    . /etc/swizzin/sources/functions/utils
-    download_libtorrent_rakshasa
-    auto_patch_libtorrent_rakshasa
-
-    ./autogen.sh >> $log 2>&1
     ./configure --prefix=/usr --enable-aligned >> $log 2>&1 || {
         echo_error "Something went wrong while configuring libtorrent"
         exit 1
@@ -239,10 +219,8 @@ function install_libtorrent_stickz() {
 function build_rtorrent() {
     if [[ ${rtorrentver} == "0.15.1" ]]; then
         build_rtorrent_new
-    elif [[ ${rtorrentver} == "0.9.8-stickz" ]]; then
-        install_rtorrent_stickz
     else
-        build_rtorrent_old
+        install_rtorrent_stickz
     fi
 }
 
@@ -257,23 +235,6 @@ function build_rtorrent_new() {
             exit 1
         }
     make -j$(nproc) CXXFLAGS="-w ${rtorrentlevel} ${rtorrentflto} ${rtorrentpipe}" >> $log 2>&1 || {
-        echo_error "Something went wrong while making rtorrent"
-        exit 1
-    }
-
-    install_rtorrent
-}
-
-function build_rtorrent_old() {
-    download_rtorrent
-    auto_patch_rtorrent
-    stdc=
-    ./autogen.sh >> $log 2>&1
-    ./configure --prefix=/usr --with-xmlrpc-tinyxml2 >> $log 2>&1 || {
-        echo_error "Something went wrong while configuring rtorrent"
-        exit 1
-    }
-    make -j$(nproc) CXXFLAGS="-w ${rtorrentlevel} ${rtorrentflto} ${rtorrentpipe} ${stdc}" >> $log 2>&1 || {
         echo_error "Something went wrong while making rtorrent"
         exit 1
     }
