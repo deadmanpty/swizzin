@@ -83,11 +83,11 @@ for version in $phpv; do
     sed -i -e "s/post_max_size = 8M/post_max_size = 64M/" \
         -e "s/upload_max_filesize = 2M/upload_max_filesize = 92M/" \
         -e "s/expose_php = On/expose_php = Off/" \
-        -e "s/128M/768M/" \
+        -e "s/128M/896M/" \
         -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" \
         -e "s/;opcache.enable=0/opcache.enable=1/" \
         -e "s/;opcache.memory_consumption=64/opcache.memory_consumption=128/" \
-        -e "s/;opcache.max_accelerated_files=2000/opcache.max_accelerated_files=4000/" \
+        -e "s/;opcache.max_accelerated_files=2000/opcache.max_accelerated_files=10000/" \
         -e "s/;opcache.revalidate_freq=2/opcache.revalidate_freq=240/" /etc/php/$version/fpm/php.ini
     phpenmod -v $version opcache
     sed -i 's/;env\[PATH\]/env[PATH]/g' /etc/php/$version/fpm/pool.d/www.conf
@@ -171,7 +171,7 @@ ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 SSC
 
 cat > /etc/nginx/snippets/proxy.conf << PROX
-client_max_body_size 10m;
+client_max_body_size 20m;
 client_body_buffer_size 128k;
 
 #Timeout if the real server is dead
