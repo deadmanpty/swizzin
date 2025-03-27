@@ -136,6 +136,7 @@ server {
   ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
   include snippets/ssl-params.conf;
   client_max_body_size 40M;
+  client_body_buffer_size 128k;
   server_tokens off;
   root /srv/;
 
@@ -172,7 +173,7 @@ ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 SSC
 
 cat > /etc/nginx/snippets/proxy.conf << PROX
-client_max_body_size 20m;
+client_max_body_size 10m;
 client_body_buffer_size 128k;
 
 #Timeout if the real server is dead
