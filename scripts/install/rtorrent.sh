@@ -14,29 +14,42 @@ function _string() { perl -le 'print map {(a..z,A..Z,0..9)[rand 62] } 0..pop' 15
 function _rconf() {
     cat > /home/${user}/.rtorrent.rc << EOF
 # -- START HERE --
-directory.default.set = /home/${user}/torrents/rtorrent
+directory.default.set = /home/${user}/torrents/downloads
 encoding.add = UTF-8
 encryption = allow_incoming,try_outgoing,enable_retry
 execute.nothrow = chmod,777,/home/${user}/.config/rpc.socket
 execute.nothrow = chmod,777,/home/${user}/.sessions
-network.port_random.set = yes
-network.port_range.set = $port-$portend
 network.scgi.open_local = /var/run/${user}/.rtorrent.sock
 schedule2 = chmod_scgi_socket, 0, 0, "execute2=chmod,\"g+w,o=\",/var/run/${user}/.rtorrent.sock"
-network.tos.set = throughput
-pieces.hash.on_completion.set = no
-pieces.preload.min_rate.set = 50000
-protocol.pex.set = no
 schedule = watch_directory,5,5,load.start=/home/${user}/rwatch/*.torrent
 session.path.set = /home/${user}/.sessions/
 throttle.global_down.max_rate.set = 0
 throttle.global_up.max_rate.set = 0
-throttle.max_peers.normal.set = 100
-throttle.max_peers.seed.set = -1
-throttle.max_uploads.global.set = 100
-throttle.min_peers.normal.set = 1
-throttle.min_peers.seed.set = -1
+throttle.max_downloads.global.set = 500
+throttle.max_uploads.global.set = 5000
+throttle.max_peers.normal.set = 25
+throttle.min_peers.normal.set = 10
+throttle.max_peers.seed.set = 25
+throttle.min_peers.seed.set = 10
+throttle.max_downloads.set = 15
+throttle.max_uploads.set = 25
+dht.mode.set = disable
+protocol.pex.set = no
 trackers.use_udp.set = yes
+trackers.delay_scrape.set = yes
+network.port_range.set = 30660-32160
+network.port_random.set = yes
+network.max_open_files.set = 2048
+network.max_open_sockets.set = 4096
+network.http.max_open.set = 512
+network.xmlrpc.size_limit.set = 24M
+network.tos.set = throughput
+pieces.hash.on_completion.set = no
+pieces.preload.type.set = 1
+pieces.preload.min_rate.set = 50000
+pieces.memory.max.set = 4500M
+system.file.allocate.set = 2
+
 schedule2 = session_save, 1200, 3600, ((session.save))
 method.set_key = event.download.inserted, 2_save_session, ((d.save_full_session))
 
@@ -48,7 +61,7 @@ EOF
 }
 
 function _makedirs() {
-    mkdir -p /home/${user}/torrents/rtorrent 2>> $log
+    mkdir -p /home/${user}/torrents/downloads 2>> $log
     mkdir -p /home/${user}/.sessions
     mkdir -p /home/${user}/rwatch
     chown -R ${user}:${user} /home/${user}/{torrents,.sessions,rwatch} 2>> $log
