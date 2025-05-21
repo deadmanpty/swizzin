@@ -86,8 +86,9 @@ for version in $phpv; do
         -e "s/128M/768M/" \
         -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" \
         -e "s/;opcache.enable=0/opcache.enable=1/" \
-        -e "s/;opcache.memory_consumption=64/opcache.memory_consumption=128/" \
-        -e "s/;opcache.max_accelerated_files=2000/opcache.max_accelerated_files=4000/" \
+        -e "s/;opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=32/" \
+        -e "s/;opcache.memory_consumption=128/opcache.memory_consumption=256/" \
+        -e "s/;opcache.max_accelerated_files=10000/opcache.max_accelerated_files=8000/" \
         -e "s/;opcache.revalidate_freq=2/opcache.revalidate_freq=240/" /etc/php/$version/fpm/php.ini
     phpenmod -v $version opcache
     sed -i 's/;env\[PATH\]/env[PATH]/g' /etc/php/$version/fpm/pool.d/www.conf
@@ -112,6 +113,8 @@ server {
   listen 80 default_server;
   listen [::]:80 default_server;
   server_name _;
+  client_max_body_size 40M;
+  client_body_buffer_size 256k;
   server_tokens off;
 
   location /.well-known {
@@ -119,6 +122,8 @@ server {
     allow all;
     default_type "text/plain";
     autoindex    on;
+    client_max_body_size 40M;
+    client_body_buffer_size 256k;
   }
 
   location / {
@@ -135,6 +140,7 @@ server {
   ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
   include snippets/ssl-params.conf;
   client_max_body_size 40M;
+  client_body_buffer_size 256k;
   server_tokens off;
   root /srv/;
 
@@ -172,7 +178,7 @@ SSC
 
 cat > /etc/nginx/snippets/proxy.conf << PROX
 client_max_body_size 40m;
-client_body_buffer_size 128k;
+client_body_buffer_size 256k;
 
 #Timeout if the real server is dead
 proxy_next_upstream error timeout invalid_header http_500 http_502 http_503;
