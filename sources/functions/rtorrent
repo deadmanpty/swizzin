@@ -71,11 +71,16 @@ function configure_rtorrent() {
 function depends_rtorrent() {
     APT='subversion dos2unix bc screen zip unzip build-essential comerr-dev
     automake libtool libcppunit-dev libssl-dev pkg-config libcurl4-openssl-dev
-    libsigc++-2.0-dev libncurses5-dev libtinyxml2-dev mediainfo yasm autoconf-archive'
+    libsigc++-2.0-dev unzip curl libncurses5-dev yasm fontconfig libfontconfig1
+    libfontconfig1-dev mediainfo autoconf-archive'
         apt_install $APT
 
         . /etc/swizzin/sources/functions/fpm
         install_fpm
+    else
+        APT='screen zip unzip bc mediainfo curl'
+        apt_install $APT
+    fi
 
     # mktorrent from source
     cd /tmp
