@@ -102,11 +102,11 @@ function depends_rtorrent() {
     fi
 }
 
-function build_xmlrpc-c() {    
-    if [[ ! ${rtorrentver} == "0.15.3" && ! ${rtorrentver} == "0.9.8-stickz" ]]; then
-        build_xmlrpc-c_old
-    fi
-}
+#function build_xmlrpc-c() {    
+#    if [[ ! ${rtorrentver} == "0.15.3" && ! ${rtorrentver} == "0.9.8-stickz" ]]; then
+#        build_xmlrpc-c_old
+#    fi
+#}
 
 #function build_xmlrpc-c_old() {
 #    cd "/tmp"
