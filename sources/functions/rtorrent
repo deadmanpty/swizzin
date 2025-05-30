@@ -77,10 +77,6 @@ function depends_rtorrent() {
 
         . /etc/swizzin/sources/functions/fpm
         install_fpm
-    else
-        APT='screen zip unzip bc mediainfo curl'
-        apt_install $APT
-    fi
 
     # mktorrent from source
     cd /tmp
