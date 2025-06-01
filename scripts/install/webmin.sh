@@ -9,7 +9,7 @@ _install_webmin() {
     sh webmin-setup-repo.sh 2>> "${log}"
     echo_progress_done "Repo added"
     apt_update
-    apt_install webmin --install-recommends
+    apt install webmin --install-recommends
 }
 
 _install_webmin
