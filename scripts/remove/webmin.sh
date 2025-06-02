@@ -11,4 +11,4 @@ rm -rf /etc/apt/sources.list.d/webmin-stable.list
 #    systemctl reload nginx
 #fi
 
-# rm -rf /install/.webmin.lock
+rm -rf /install/.webmin.lock
