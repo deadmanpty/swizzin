@@ -12,3 +12,4 @@ rm -rf /etc/apt/sources.list.d/webmin-stable.list
 #fi
 
 rm -rf /install/.webmin.lock
+rm -rf webmin-setup-repo.sh
