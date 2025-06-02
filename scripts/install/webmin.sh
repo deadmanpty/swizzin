@@ -6,7 +6,7 @@
 _install_webmin() {
     echo_progress_start "Installing Webmin repo"
     curl -o webmin-setup-repo.sh https://raw.githubusercontent.com/webmin/webmin/master/webmin-setup-repo.sh 2>> "${log}"
-    sh -y webmin-setup-repo.sh 2>> "${log}"
+    bash -y webmin-setup-repo.sh 2>> "${log}"
     echo_progress_done "Repo added"
     apt_update
     apt install webmin --install-recommends -y
