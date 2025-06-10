@@ -80,7 +80,7 @@ cd /etc/php
 phpv=$(ls -d */ | cut -d/ -f1)
 echo_progress_start "Making adjustments to PHP"
 for version in $phpv; do
-    sed -i -e "s/post_max_size = 8M/post_max_size = 72M/" \
+    sed -i -e "s/post_max_size = 8M/post_max_size = 80M/" \
         -e "s/upload_max_filesize = 2M/upload_max_filesize = 96M/" \
         -e "s/expose_php = On/expose_php = Off/" \
         -e "s/max_execution_time = 30/max_execution_time = 60/" \
