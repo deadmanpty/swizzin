@@ -40,6 +40,7 @@ dht.mode.set = disable
 protocol.pex.set = no
 trackers.use_udp.set = yes
 trackers.delay_scrape.set = yes
+trackers.delay_scrape = 1
 network.max_open_files.set = 2048
 network.max_open_sockets.set = 4096
 network.http.max_open.set = 512
