@@ -83,8 +83,8 @@ for version in $phpv; do
     sed -i -e "s/post_max_size = 8M/post_max_size = 80M/" \
         -e "s/upload_max_filesize = 2M/upload_max_filesize = 96M/" \
         -e "s/expose_php = On/expose_php = Off/" \
-        -e "s/max_execution_time = 30/max_execution_time = 60/" \
-        -e "s/128M/1536M/" \
+        -e "s/max_execution_time = 30/max_execution_time = 45/" \
+        -e "s/128M/1156M/" \
         -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" \
         -e "s/;opcache.enable=1/opcache.enable=1/" \
         -e "s/;opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=32/" \
