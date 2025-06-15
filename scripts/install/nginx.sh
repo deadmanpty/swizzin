@@ -114,7 +114,7 @@ server {
   listen 80 default_server;
   listen [::]:80 default_server;
   server_name _;
-  client_max_body_size 40M;
+  client_max_body_size 96M;
   client_body_buffer_size 256k;
   server_tokens off;
 
@@ -123,7 +123,7 @@ server {
     allow all;
     default_type "text/plain";
     autoindex    on;
-    client_max_body_size 40M;
+    client_max_body_size 96M;
     client_body_buffer_size 256k;
   }
 
@@ -140,7 +140,7 @@ server {
   ssl_certificate /etc/ssl/certs/ssl-cert-snakeoil.pem;
   ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
   include snippets/ssl-params.conf;
-  client_max_body_size 40M;
+  client_max_body_size 96M;
   client_body_buffer_size 256k;
   server_tokens off;
   root /srv/;
@@ -178,7 +178,7 @@ ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 SSC
 
 cat > /etc/nginx/snippets/proxy.conf << PROX
-client_max_body_size 40m;
+client_max_body_size 96m;
 client_body_buffer_size 256k;
 
 #Timeout if the real server is dead
