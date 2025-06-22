@@ -84,7 +84,7 @@ for version in $phpv; do
     sed -i -e "s/post_max_size = 8M/post_max_size = 80M/" \
         -e "s/upload_max_filesize = 2M/upload_max_filesize = 96M/" \
         -e "s/expose_php = On/expose_php = Off/" \
-        -e "s/max_execution_time = 30/max_execution_time = 45/" \
+        -e "s/max_execution_time = 30/max_execution_time = 60/" \
         -e "s/128M/1156M/" \
         -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" \
         -e "s/;opcache.enable=1/opcache.enable=1/" \
@@ -101,6 +101,7 @@ if [[ ! -f /etc/nginx/modules-enabled/50-mod-http-fancyindex.conf ]]; then
     mkdir -p /etc/nginx/modules-enabled/
     ln -s /usr/share/nginx/modules-available/mod-http-fancyindex.conf /etc/nginx/modules-enabled/50-mod-http-fancyindex.conf
 fi
+sed -i -e "s/worker_connections 768/worker_connections 1024/" /etc/nginx/nginx.conf
 
 . /etc/swizzin/sources/functions/php
 phpversion=$(php_service_version)
@@ -115,8 +116,14 @@ server {
   listen 80 default_server;
   listen [::]:80 default_server;
   server_name _;
-  client_max_body_size 96M;
+  client_max_body_size 128M;
   client_body_buffer_size 512k;
+  client_body_timeout 240s;
+  client_header_timeout 240s;
+  keepalive_timeout 90s;
+  proxy_connect_timeout 300s;
+  proxy_read_timeout 300s;
+  proxy_send_timeout 300s;
   server_tokens off;
 
   location /.well-known {
@@ -124,8 +131,6 @@ server {
     allow all;
     default_type "text/plain";
     autoindex    on;
-    client_max_body_size 96M;
-    client_body_buffer_size 512k;
   }
 
   location / {
@@ -141,8 +146,14 @@ server {
   ssl_certificate /etc/ssl/certs/ssl-cert-snakeoil.pem;
   ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
   include snippets/ssl-params.conf;
-  client_max_body_size 96M;
+  client_max_body_size 128M;
   client_body_buffer_size 512k;
+  client_body_timeout 240s;
+  client_header_timeout 240s;
+  keepalive_timeout 90s;
+  proxy_connect_timeout 300s;
+  proxy_read_timeout 300s;
+  proxy_send_timeout 300s;
   server_tokens off;
   root /srv/;
 
@@ -179,17 +190,20 @@ ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 SSC
 
 cat > /etc/nginx/snippets/proxy.conf << PROX
-client_max_body_size 96m;
+client_max_body_size 128m;
 client_body_buffer_size 512k;
+client_body_timeout 240s;
+client_header_timeout 240s;
+keepalive_timeout 90s;
 
 #Timeout if the real server is dead
 proxy_next_upstream error timeout invalid_header http_500 http_502 http_503;
 
 # Advanced Proxy Config
 send_timeout 5m;
-proxy_read_timeout 240;
-proxy_send_timeout 240;
-proxy_connect_timeout 240;
+proxy_read_timeout 300s;
+proxy_send_timeout 300s;
+proxy_connect_timeout 300s;
 
 # Basic Proxy Config
 proxy_set_header Host \$host;
