@@ -82,16 +82,16 @@ phpv=$(ls -d */ | cut -d/ -f1)
 echo_progress_start "Making adjustments to PHP"
 for version in $phpv; do
     sed -i -e "s/post_max_size = 8M/post_max_size = 80M/" \
-        -e "s/upload_max_filesize = 2M/upload_max_filesize = 96M/" \
+        -e "s/upload_max_filesize = 2M/upload_max_filesize = 120M/" \
         -e "s/expose_php = On/expose_php = Off/" \
         -e "s/max_execution_time = 30/max_execution_time = 60/" \
-        -e "s/128M/1280M/" \
+        -e "s/128M/1024M/" \
         -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" \
         -e "s/;opcache.enable=1/opcache.enable=1/" \
-        -e "s/;opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=64/" \
-        -e "s/;opcache.memory_consumption=128/opcache.memory_consumption=512/" \
-        -e "s/;opcache.max_accelerated_files=10000/opcache.max_accelerated_files=8000/" \
-        -e "s/;opcache.revalidate_freq=2/opcache.revalidate_freq=240/" /etc/php/$version/fpm/php.ini
+        -e "s/;opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=32/" \
+        -e "s/;opcache.memory_consumption=128/opcache.memory_consumption=256/" \
+        -e "s/;opcache.max_accelerated_files=10000/opcache.max_accelerated_files=6000/" \
+        -e "s/;opcache.revalidate_freq=2/opcache.revalidate_freq=300/" /etc/php/$version/fpm/php.ini
     phpenmod -v $version opcache
     sed -i 's/;env\[PATH\]/env[PATH]/g' /etc/php/$version/fpm/pool.d/www.conf
 done
@@ -117,10 +117,10 @@ server {
   listen [::]:80 default_server;
   server_name _;
   client_max_body_size 128M;
-  client_body_buffer_size 512k;
+  client_body_buffer_size 256k;
   client_body_timeout 300s;
   client_header_timeout 300s;
-  keepalive_timeout 90s;
+  keepalive_timeout 75s;
   proxy_connect_timeout 300s;
   proxy_read_timeout 300s;
   proxy_send_timeout 300s;
@@ -147,10 +147,10 @@ server {
   ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
   include snippets/ssl-params.conf;
   client_max_body_size 128M;
-  client_body_buffer_size 512k;
+  client_body_buffer_size 256k;
   client_body_timeout 300s;
   client_header_timeout 300s;
-  keepalive_timeout 90s;
+  keepalive_timeout 75s;
   proxy_connect_timeout 300s;
   proxy_read_timeout 300s;
   proxy_send_timeout 300s;
@@ -191,10 +191,10 @@ SSC
 
 cat > /etc/nginx/snippets/proxy.conf << PROX
 client_max_body_size 128m;
-client_body_buffer_size 512k;
+client_body_buffer_size 256k;
 client_body_timeout 300s;
 client_header_timeout 300s;
-keepalive_timeout 90s;
+keepalive_timeout 75s;
 
 #Timeout if the real server is dead
 proxy_next_upstream error timeout invalid_header http_500 http_502 http_503;
