@@ -118,8 +118,8 @@ server {
   server_name _;
   client_max_body_size 128M;
   client_body_buffer_size 512k;
-  client_body_timeout 240s;
-  client_header_timeout 240s;
+  client_body_timeout 300s;
+  client_header_timeout 300s;
   keepalive_timeout 90s;
   proxy_connect_timeout 300s;
   proxy_read_timeout 300s;
@@ -148,8 +148,8 @@ server {
   include snippets/ssl-params.conf;
   client_max_body_size 128M;
   client_body_buffer_size 512k;
-  client_body_timeout 240s;
-  client_header_timeout 240s;
+  client_body_timeout 300s;
+  client_header_timeout 300s;
   keepalive_timeout 90s;
   proxy_connect_timeout 300s;
   proxy_read_timeout 300s;
@@ -192,8 +192,8 @@ SSC
 cat > /etc/nginx/snippets/proxy.conf << PROX
 client_max_body_size 128m;
 client_body_buffer_size 512k;
-client_body_timeout 240s;
-client_header_timeout 240s;
+client_body_timeout 300s;
+client_header_timeout 300s;
 keepalive_timeout 90s;
 
 #Timeout if the real server is dead
