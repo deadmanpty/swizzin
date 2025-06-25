@@ -155,7 +155,7 @@ function build_libtorrent_rakshasa_new() {
         echo_error "Something went wrong while configuring libtorrent"
         exit 1
     }
-    make -j$(nproc) CXXFLAGS="-w ${rtorrentlevel} ${rtorrentflto} ${rtorrentpipe}" >> $log 2>&1 || {
+    make -j$(nproc) CXXFLAGS="-w ${rtorrentlevel} ${rtorrentflto} ${rtorrentpipe} -Werror=odr -Werror=lto-type-mismatch -Werror=strict-aliasing" >> $log 2>&1 || {
         echo_error "Something went wrong while making libtorrent"
         exit 1
     }
@@ -209,7 +209,7 @@ function install_libtorrent_stickz() {
         echo_error "Something went wrong while configuring libtorrent"
         exit 1
     }
-    make -j$(nproc) CXXFLAGS="-w ${rtorrentlevel} ${rtorrentflto} ${rtorrentpipe}" >> $log 2>&1 || {
+    make -j$(nproc) CXXFLAGS="-w ${rtorrentlevel} ${rtorrentflto} ${rtorrentpipe} -Werror=odr -Werror=lto-type-mismatch -Werror=strict-aliasing" >> $log 2>&1 || {
         echo_error "Something went wrong while making libtorrent"
         exit 1
     }
@@ -235,7 +235,7 @@ function build_rtorrent_new() {
             echo_error "Something went wrong while configuring rtorrent with tinyxml2"
             exit 1
         }
-    make -j$(nproc) CXXFLAGS="-w ${rtorrentlevel} ${rtorrentflto} ${rtorrentpipe}" >> $log 2>&1 || {
+   # make -j$(nproc) CXXFLAGS="-w ${rtorrentlevel} ${rtorrentflto} ${rtorrentpipe} -Werror=odr -Werror=lto-type-mismatch -Werror=strict-aliasing" >> $log 2>&1 || {
         echo_error "Something went wrong while making rtorrent"
         exit 1
     }
@@ -251,7 +251,7 @@ function install_rtorrent_stickz() {
         echo_error "Something went wrong while configuring rtorrent"
         exit 1
     }
-    make -j$(nproc) CXXFLAGS="-w ${rtorrentlevel} ${rtorrentflto} ${rtorrentpipe}" >> $log 2>&1 || {
+   # make -j$(nproc) CXXFLAGS="-w ${rtorrentlevel} ${rtorrentflto} ${rtorrentpipe} -Werror=odr -Werror=lto-type-mismatch -Werror=strict-aliasing" >> $log 2>&1 || {
         echo_error "Something went wrong while making rtorrent"
         exit 1
     }
