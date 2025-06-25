@@ -81,7 +81,7 @@ cd /etc/php
 phpv=$(ls -d */ | cut -d/ -f1)
 echo_progress_start "Making adjustments to PHP"
 for version in $phpv; do
-    sed -i -e "s/post_max_size = 8M/post_max_size = 96M/" \
+    sed -i -e "s/post_max_size = 8M/post_max_size = 100M/" \
         -e "s/upload_max_filesize = 2M/upload_max_filesize = 120M/" \
         -e "s/expose_php = On/expose_php = Off/" \
         -e "s/max_execution_time = 30/max_execution_time = 60/" \
@@ -116,11 +116,11 @@ server {
   listen 80 default_server;
   listen [::]:80 default_server;
   server_name _;
-  client_max_body_size 160M;
+  client_max_body_size 120M;
   client_body_buffer_size 512k;
-  client_body_timeout 300s;
-  client_header_timeout 300s;
-  keepalive_timeout 75s;
+  client_body_timeout 240s;
+  client_header_timeout 240s;
+  keepalive_timeout 60s;
   server_tokens off;
 
   location /.well-known {
@@ -143,11 +143,11 @@ server {
   ssl_certificate /etc/ssl/certs/ssl-cert-snakeoil.pem;
   ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
   include snippets/ssl-params.conf;
-  client_max_body_size 160M;
+  client_max_body_size 120M;
   client_body_buffer_size 512k;
-  client_body_timeout 300s;
-  client_header_timeout 300s;
-  keepalive_timeout 75s;
+  client_body_timeout 240s;
+  client_header_timeout 240s;
+  keepalive_timeout 60s;
   server_tokens off;
   root /srv/;
 
@@ -184,11 +184,11 @@ ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 SSC
 
 cat > /etc/nginx/snippets/proxy.conf << PROX
-client_max_body_size 128m;
+client_max_body_size 120m;
 client_body_buffer_size 512k;
 client_body_timeout 300s;
 client_header_timeout 300s;
-keepalive_timeout 75s;
+keepalive_timeout 60s;
 
 #Timeout if the real server is dead
 proxy_next_upstream error timeout invalid_header http_500 http_502 http_503;
