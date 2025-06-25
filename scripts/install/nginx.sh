@@ -116,14 +116,11 @@ server {
   listen 80 default_server;
   listen [::]:80 default_server;
   server_name _;
-  client_max_body_size 128M;
-  client_body_buffer_size 256k;
+  client_max_body_size 160M;
+  client_body_buffer_size 512k;
   client_body_timeout 300s;
   client_header_timeout 300s;
   keepalive_timeout 75s;
-  proxy_connect_timeout 300s;
-  proxy_read_timeout 300s;
-  proxy_send_timeout 300s;
   server_tokens off;
 
   location /.well-known {
@@ -146,14 +143,11 @@ server {
   ssl_certificate /etc/ssl/certs/ssl-cert-snakeoil.pem;
   ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
   include snippets/ssl-params.conf;
-  client_max_body_size 128M;
-  client_body_buffer_size 256k;
+  client_max_body_size 160M;
+  client_body_buffer_size 512k;
   client_body_timeout 300s;
   client_header_timeout 300s;
   keepalive_timeout 75s;
-  proxy_connect_timeout 300s;
-  proxy_read_timeout 300s;
-  proxy_send_timeout 300s;
   server_tokens off;
   root /srv/;
 
@@ -191,7 +185,7 @@ SSC
 
 cat > /etc/nginx/snippets/proxy.conf << PROX
 client_max_body_size 128m;
-client_body_buffer_size 256k;
+client_body_buffer_size 512k;
 client_body_timeout 300s;
 client_header_timeout 300s;
 keepalive_timeout 75s;
