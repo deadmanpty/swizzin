@@ -178,7 +178,7 @@ ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 SSC
 
 cat > /etc/nginx/snippets/proxy.conf << PROX
-client_max_body_size 40m;
+client_max_body_size 80m;
 client_body_buffer_size 512k;
 
 #Timeout if the real server is dead
