@@ -41,6 +41,7 @@ protocol.pex.set = no
 trackers.use_udp.set = yes
 trackers.delay_scrape.set = yes
 trackers.delay_scrape = 1
+network.max_open_files.set = -1
 network.max_open_sockets.set = 2048
 network.http.max_open.set = 256
 network.xmlrpc.size_limit.set = 64M
