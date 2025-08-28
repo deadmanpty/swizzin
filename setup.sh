@@ -198,7 +198,7 @@ _os() {
         echo_error "Your distribution ($distribution) is not supported. Swizzin requires Ubuntu or Debian."
         exit 1
     fi
-    if [[ ! $codename =~ ^(focal|bullseye|jammy|bookworm|noble)$ ]]; then
+    if [[ ! $codename =~ ^(focal|bullseye|jammy|bookworm|noble|trixie)$ ]]; then
         echo_error "Your release ($codename) of $distribution is not supported."
         exit 1
     fi
@@ -215,8 +215,8 @@ function _preparation() {
         exit 1
     fi
 
-    nofile=$(grep "DefaultLimitNOFILE=500000" /etc/systemd/system.conf)
-    if [[ ! "$nofile" ]]; then echo "DefaultLimitNOFILE=500000" >> /etc/systemd/system.conf; fi
+    nofile=$(grep "DefaultLimitNOFILE=2097152" /etc/systemd/system.conf)
+    if [[ ! "$nofile" ]]; then echo "DefaultLimitNOFILE=2097152" >> /etc/systemd/system.conf; fi
     echo_progress_done "Setup succesful"
     echo
 }
