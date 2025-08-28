@@ -1,7 +1,8 @@
 #!/bin/bash
 
 function rutorrent_install() {
-    apt_install sox geoip-database p7zip-full zip unzip php8.4-bcmath
+    #apt_install sox geoip-database p7zip-full zip unzip php8.4-bcmath
+    apt_install sox geoip-database p7zip-full zip unzip php-bcmath
 
     mkdir -p /srv
     if [[ ! -d /srv/rutorrent ]]; then
