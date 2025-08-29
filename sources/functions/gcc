@@ -1,27 +1,27 @@
 #!/bin/bash
-# Upgrade to GCC 12 for Jammy users to unlock better performance of compiled software
+# Upgrade to GCC 14 for Noble users to unlock better performance of compiled software
 
 GCC_Jammy_Upgrade() {
-    # Check if the operating system is Ubuntu 22.04 LTS
-    if [[ $(_os_codename) == "jammy" ]]; then
-        # Check if GCC 12 is installed by looking for the binary path
-        if ! which gcc-12 > /dev/null; then
-            echo_info "Installing GCC 12"
+    # Check if the operating system is Ubuntu 24.04 LTS
+    if [[ $(_os_codename) == "noble" ]]; then
+        # Check if GCC 14 is installed by looking for the binary path
+        if ! which gcc-14 > /dev/null; then
+            echo_info "Installing GCC 14"
             apt_install gcc-14 g++-14
         fi
-        # Check if GCC 12 is system default by comparing the version string
-        if [[ $(gcc --version | grep -c "Ubuntu 12") -le 0 ]]; then
-            echo_info "Configuring GCC 12"
+        # Check if GCC 14 is system default by comparing the version string
+        if [[ $(gcc --version | grep -c "Ubuntu 13") -le 0 ]]; then
+            echo_info "Configuring GCC 14"
             echo_log_only "Removing all GCC preferences"
             update-alternatives --remove-all gcc >> $log 2>&1
             update-alternatives --remove-all g++ >> $log 2>&1
-            echo_log_only "Setting GCC 12 as system default"
+            echo_log_only "Setting GCC 14 as system default"
             update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 14 >> $log 2>&1
             update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 14 >> $log 2>&1
-            if which gcc-11 > /dev/null; then
-                echo_log_only "Setting GCC 11 as system backup"
-                update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 14 >> $log 2>&1
-                update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 14 >> $log 2>&1
+            if which gcc-13 > /dev/null; then
+                echo_log_only "Setting GCC 13 as system backup"
+                update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 13 >> $log 2>&1
+                update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 13 >> $log 2>&1
             fi
         fi
     fi
