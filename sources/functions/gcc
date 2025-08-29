@@ -16,12 +16,12 @@ GCC_Jammy_Upgrade() {
             update-alternatives --remove-all gcc >> $log 2>&1
             update-alternatives --remove-all g++ >> $log 2>&1
             echo_log_only "Setting GCC 12 as system default"
-            update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 12 >> $log 2>&1
-            update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12 12 >> $log 2>&1
+            update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 14 >> $log 2>&1
+            update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 14 >> $log 2>&1
             if which gcc-11 > /dev/null; then
                 echo_log_only "Setting GCC 11 as system backup"
-                update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 11 >> $log 2>&1
-                update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 11 >> $log 2>&1
+                update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 14 >> $log 2>&1
+                update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 14 >> $log 2>&1
             fi
         fi
     fi
