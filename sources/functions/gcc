@@ -16,8 +16,8 @@ GCC_Upgrade() {
             update-alternatives --remove-all gcc >> $log 2>&1
             update-alternatives --remove-all g++ >> $log 2>&1
             echo_log_only "Setting GCC 14 as system default"
-            update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 14 >> $log 2>&1
-            update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 14 >> $log 2>&1
+            update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 100 >> $log 2>&1
+            update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 100 >> $log 2>&1
             #if which gcc-13 > /dev/null; then
             #    echo_log_only "Setting GCC 13 as system backup"
             #    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 13 >> $log 2>&1
