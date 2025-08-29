@@ -7,7 +7,7 @@ GCC_Jammy_Upgrade() {
         # Check if GCC 12 is installed by looking for the binary path
         if ! which gcc-12 > /dev/null; then
             echo_info "Installing GCC 12"
-            apt_install gcc-12 g++-12
+            apt_install gcc-14 g++-14
         fi
         # Check if GCC 12 is system default by comparing the version string
         if [[ $(gcc --version | grep -c "Ubuntu 12") -le 0 ]]; then
