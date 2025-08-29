@@ -1,7 +1,7 @@
 #!/bin/bash
 # Upgrade to GCC 14 for Noble users to unlock better performance of compiled software
 
-GCC_Jammy_Upgrade() {
+GCC_Upgrade() {
     # Check if the operating system is Ubuntu 24.04 LTS
     if [[ $(_os_codename) == "noble" ]]; then
         # Check if GCC 14 is installed by looking for the binary path
