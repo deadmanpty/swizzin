@@ -3,7 +3,7 @@
 
 GCC_Upgrade() {
     # Check if the operating system is Ubuntu 24.04 LTS
-    if [[ $(_os_codename) == "noble" ]]; then
+    if [[ $(_os_codename) == "jammy" ]]; then
         # Check if GCC 14 is installed by looking for the binary path
         if ! which gcc-14 > /dev/null; then
             echo_info "Installing GCC 14"
