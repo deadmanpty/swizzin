@@ -1,9 +1,9 @@
 #!/bin/bash
 # Ensures that dependencies are installed and corrects them if that is not the case.
 
-if ! which add-apt-repository > /dev/null; then
-    apt_install software-properties-common # Ubuntu may require universe/mutliverse enabled for certain packages so we must ensure repos are enabled before deps are attempted to installed
-fi
+#if ! which add-apt-repository > /dev/null; then
+#    apt_install software-properties-common # Ubuntu may require universe/mutliverse enabled for certain packages so we must ensure repos are enabled before deps are attempted to installed
+#fi
 
 if [[ $(_os_distro) == "ubuntu" ]]; then
     if [[ $(_os_codename) == "jammy" ]]; then
