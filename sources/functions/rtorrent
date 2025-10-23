@@ -11,7 +11,7 @@ function whiptail_rtorrent() {
         whiptail --title "rTorrent Install Advisory" --msgbox "We recommend rTorrent version selection instead of repo (distro) releases. They will compile additional performance and stability improvements in 90s. UDNS includes a stability patch for UDP trackers on rTorrent." 15 50
 
         function=$(whiptail --title "Choose an rTorrent version" --menu "All versions other than repo will be locally compiled from source" --ok-button "Continue" 14 50 5 \
-            0.16.0 "(UDNS)" \
+            0.16.1 "(UDNS)" \
             0.15.7 "(UDNS)" \
             0.15.5 "(UDNS)" \
             stickz "(0.9.8-stickz)" 3>&1 1>&2 2>&3) || {
@@ -33,15 +33,16 @@ function set_rtorrent_version() {
             export libudns='true'
             ;;
 	
-        0.16.0 | '0.16.0')
-            export rtorrentver='0.16.0'
-            export libtorrentver='0.16.0'
+        0.16.1 | '0.16.1')
+            export rtorrentver='0.16.1'
+            export libtorrentver='0.16.1'
             export libudns='false'
             ;;
 
         0.15.7 | '0.15.7')
             export rtorrentver='0.15.7'
             export libtorrentver='0.15.7'
+            export libudns='false'
             ;;
 	
         0.15.5 | '0.15.5')
@@ -116,42 +117,8 @@ function depends_rtorrent() {
     fi
 }
 
-#function build_xmlrpc-c() {    
-#    if [[ ! ${rtorrentver} == "0.16.0" && ! ${rtorrentver} == "0.9.8-stickz" ]]; then
-#        build_xmlrpc-c_old
-#    fi
-#}
-
-#function build_xmlrpc-c_old() {
-#    cd "/tmp"
-#    . /etc/swizzin/sources/functions/utils
-#    rm_if_exists "/tmp/xmlrpc-c"
-#    rm_if_exists "/tmp/dist/xmlrpc-c "
-#    svn checkout svn://svn.code.sf.net/p/xmlrpc-c/code/super_stable /tmp/xmlrpc-c >> $log 2>&1;
-#    cd /tmp/xmlrpc-c
-#    cp -rf /etc/swizzin/sources/patches/rtorrent/xmlrpc-config.guess config.guess >> $log 2>&1
-#    cp -rf /etc/swizzin/sources/patches/rtorrent/xmlrpc-config.sub config.sub >> $log 2>&1
-#    ./configure --prefix=/usr --disable-cplusplus --disable-wininet-client --disable-libwww-client --disable-abyss-server --disable-cgi-server >> $log 2>&1 || {
-#        echo_error "Something went wrong while configuring xmlrpc"
-#        exit 1
-#    }
-#    source <(sed 's/ //g' version.mk)
-#    VERSION=$XMLRPC_MAJOR_RELEASE.$XMLRPC_MINOR_RELEASE.$XMLRPC_POINT_RELEASE
-#    make -j$(nproc) CFLAGS="-w ${rtorrentlevel} ${rtorrentflto} ${rtorrentpipe}" >> $log 2>&1
-#    make DESTDIR=/tmp/dist/xmlrpc-c install >> $log 2>&1 || {
-#        echo_error "Something went wrong while making xmlrpc"
-#        exit 1
-#    }
-#    mkdir -p /root/dist
-#    fpm -f -C /tmp/dist/xmlrpc-c -p /root/dist/xmlrpc-c_VERSION.deb -s dir -t deb -n xmlrpc-c --version ${VERSION} --description "xmlrpc-c compiled by swizzin" > /dev/null 2>&1
-#    dpkg -i /root/dist/xmlrpc-c_${VERSION}.deb >> $log 2>&1
-#    cd /tmp
-#    rm -rf xmlrpc-c
-#    rm -rf /tmp/dist/xmlrpc-c
-#}
-
 function build_libtorrent_rakshasa() {
-    if [[ ${libtorrentver} == "0.15.5"  || ${libtorrentver} == "0.15.7" || ${libtorrentver} == "0.16.0" ]]; then
+    if [[ ${libtorrentver} == "0.15.5"  || ${libtorrentver} == "0.15.7" || ${libtorrentver} == "0.16.1" ]]; then
         build_libtorrent_rakshasa_new
     else
         install_libtorrent_stickz
@@ -231,7 +198,7 @@ function install_libtorrent_stickz() {
 }
 
 function build_rtorrent() {
-    if [[ ${rtorrentver} == "0.15.5" || ${rtorrentver} == "0.15.7" || ${rtorrentver} == "0.16.0"  ]]; then
+    if [[ ${rtorrentver} == "0.15.5" || ${rtorrentver} == "0.15.7" || ${rtorrentver} == "0.16.1"  ]]; then
         build_rtorrent_new
     else
         install_rtorrent_stickz
