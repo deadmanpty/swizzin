@@ -85,8 +85,7 @@ function configure_rtorrent() {
 function depends_rtorrent() {
     APT='subversion dos2unix bc screen zip unzip build-essential comerr-dev
     automake libtool libcppunit-dev libssl-dev pkg-config libcurl4-openssl-dev
-    libsigc++-2.0-dev unzip curl libncurses5-dev yasm fontconfig libfontconfig1
-    libfontconfig1-dev mediainfo autoconf-archive libtinyxml2-*'
+    libsigc++-2.0-dev unzip curl libncurses5-dev yasm mediainfo autoconf-archive libtinyxml2-*'
         apt_install $APT
 
         . /etc/swizzin/sources/functions/fpm
