@@ -34,8 +34,8 @@ function set_rtorrent_version() {
             ;;
 	
         0.16.4 | '0.16.4')
-            export rtorrentver='0.16.2'
-            export libtorrentver='0.16.2'
+            export rtorrentver='0.16.4'
+            export libtorrentver='0.16.4'
             export libudns='false'
             ;;
 
