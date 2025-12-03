@@ -201,7 +201,7 @@ proxy_http_version 1.1;
 proxy_set_header Connection "";
 proxy_cache_bypass \$cookie_session;
 proxy_no_cache \$cookie_session;
-proxy_buffers 32 4k;
+proxy_buffers 40 4k;
 PROX
 echo_progress_done "Config installed"
 
