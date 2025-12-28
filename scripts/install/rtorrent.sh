@@ -26,28 +26,28 @@ schedule = watch_directory,5,5,load.start=/home/${user}/rwatch/*.torrent
 session.path.set = /home/${user}/.sessions/
 throttle.global_down.max_rate.set = 0
 throttle.global_up.max_rate.set = 0
-throttle.max_downloads.global.set = 800
-throttle.max_uploads.global.set = 800
-throttle.max_peers.normal.set = 160
+throttle.max_downloads.global.set = 1000
+throttle.max_uploads.global.set = 1000
+throttle.max_peers.normal.set = 200
 throttle.min_peers.normal.set = 1
-throttle.max_peers.seed.set = 160
+throttle.max_peers.seed.set = 200
 throttle.min_peers.seed.set = -1
-throttle.max_downloads.set = 80
-throttle.max_uploads.set = 80
+throttle.max_downloads.set = 100
+throttle.max_uploads.set = 100
 network.port_range.set = 48160-52160
 network.port_random.set = yes
 dht.mode.set = disable
 protocol.pex.set = no
 trackers.use_udp.set = yes
 trackers.delay_scrape.set = yes
-network.max_open_files.set = 20480
+network.max_open_files.set = 10000
 network.max_open_sockets.set = 2048
 network.http.max_open.set = 256
-network.xmlrpc.size_limit.set = 40M
+network.xmlrpc.size_limit.set = 32M
 pieces.hash.on_completion.set = no
 pieces.preload.type.set = 1
 pieces.preload.min_rate.set = 50000
-pieces.memory.max.set = 6000M
+pieces.memory.max.set = 5000M
 system.file.allocate.set = 2
 
 method.set_key = event.download.inserted_new, "schedule2 = ((d.hash)), 0, 0, ((d.save_full_session))"
