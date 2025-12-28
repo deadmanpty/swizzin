@@ -91,7 +91,7 @@ for version in $phpv; do
         -e "s/;opcache.enable=1/opcache.enable=1/" \
         -e "s/;opcache.interned_strings_buffer=8/opcache.interned_strings_buffer=32/" \
         -e "s/;opcache.memory_consumption=128/opcache.memory_consumption=256/" \
-        -e "s/;opcache.max_accelerated_files=10000/opcache.max_accelerated_files=6000/" \
+        -e "s/;opcache.max_accelerated_files=10000/opcache.max_accelerated_files=8000/" \
         -e "s/;opcache.revalidate_freq=2/opcache.revalidate_freq=300/" /etc/php/$version/fpm/php.ini
     phpenmod -v $version opcache
     sed -i 's/;env\[PATH\]/env[PATH]/g' /etc/php/$version/fpm/pool.d/www.conf
