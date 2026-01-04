@@ -83,7 +83,7 @@ if [[ $trigger_apt_update == "true" ]]; then
 fi
 
 #space-separated list of required GLOBAL SWIZZIN dependencies (NOT application specific ones)
-dependencies="whiptail git sudo curl wget lsof rsyslog fail2ban apache2-utils build-essential apt-transport-https bc jq uuid-runtime gnupg2 net-tools cracklib-runtime unzip ccze cron"
+dependencies="whiptail git sudo curl wget lsof rsyslog fail2ban apache2-utils build-essential apt-transport-https bc jq tcl uuid-runtime gnupg2 net-tools cracklib-runtime unzip ccze cron"
 
 apt_install "${dependencies[@]}"
 
