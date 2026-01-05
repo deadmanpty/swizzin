@@ -21,38 +21,38 @@ execute.nothrow = chmod,777,/home/${user}/.config/rpc.socket
 execute.nothrow = chmod,777,/home/${user}/.sessions
 network.scgi.open_local = /var/run/${user}/.rtorrent.sock
 schedule2 = chmod_scgi_socket, 0, 0, "execute2=chmod,\"g+w,o=\",/var/run/${user}/.rtorrent.sock"
-network.tos.set = throughput
-schedule = watch_directory,5,5,load.start=/home/${user}/rwatch/*.torrent
+schedule2 = watch_directory,5,5,load.start=/home/${user}/rwatch/*.torrent
 session.path.set = /home/${user}/.sessions/
 throttle.global_down.max_rate.set = 0
 throttle.global_up.max_rate.set = 0
-throttle.max_downloads.global.set = 1000
-throttle.max_uploads.global.set = 1000
-throttle.max_peers.normal.set = 200
+throttle.max_downloads.global.set = 200
+throttle.max_uploads.global.set = 800
+throttle.max_peers.normal.set = 80
 throttle.min_peers.normal.set = 1
-throttle.max_peers.seed.set = 200
+throttle.max_peers.seed.set = 80
 throttle.min_peers.seed.set = -1
-throttle.max_downloads.set = 100
-throttle.max_uploads.set = 100
+throttle.max_downloads.set = 40
+throttle.max_uploads.set = 40
 network.port_range.set = 48160-52160
 network.port_random.set = yes
 dht.mode.set = disable
 protocol.pex.set = no
 trackers.use_udp.set = yes
 trackers.delay_scrape.set = yes
-network.max_open_files.set = 10000
+network.tos.set = throughput
+network.max_open_files.set = 4096
 network.max_open_sockets.set = 2048
-network.http.max_open.set = 256
+network.http.max_open.set = 128
 network.xmlrpc.size_limit.set = 32M
 pieces.hash.on_completion.set = no
 pieces.preload.type.set = 1
 pieces.preload.min_rate.set = 50000
-pieces.memory.max.set = 5000M
+pieces.memory.max.set = 4500M
 system.file.allocate.set = 2
 
 method.set_key = event.download.inserted_new, "schedule2 = ((d.hash)), 0, 0, ((d.save_full_session))"
-
-execute = {sh,-c,/usr/bin/php /srv/rutorrent/php/initplugins.php ${user} &}
+schedule2 = init_plugins, 10, 0,
+execute2 = {sh,-c,/usr/bin/php /srv/rutorrent/php/initplugins.php ${user} &}
 
 # -- END HERE --
 EOF
