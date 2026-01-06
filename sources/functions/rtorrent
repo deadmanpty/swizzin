@@ -11,7 +11,7 @@ function whiptail_rtorrent() {
         whiptail --title "rTorrent Install Advisory" --msgbox "We recommend rTorrent version selection instead of repo (distro) releases. They will compile additional performance and stability improvements in 90s. UDNS includes a stability patch for UDP trackers on rTorrent." 15 50
 
         function=$(whiptail --title "Choose an rTorrent version" --menu "All versions other than repo will be locally compiled from source" --ok-button "Continue" 14 50 5 \
-            0.16.4 "(UDNS)" \
+            0.16.6 "(UDNS)" \
             0.15.7 "(UDNS)" \
             0.15.5 "(UDNS)" \
             stickz "(0.9.8-stickz)" 3>&1 1>&2 2>&3) || {
@@ -33,9 +33,9 @@ function set_rtorrent_version() {
             export libudns='true'
             ;;
 	
-        0.16.4 | '0.16.4')
-            export rtorrentver='0.16.4'
-            export libtorrentver='0.16.4'
+        0.16.6 | '0.16.6')
+            export rtorrentver='0.16.6'
+            export libtorrentver='0.16.6'
             export libudns='false'
             ;;
 
@@ -117,7 +117,7 @@ function depends_rtorrent() {
 }
 
 function build_libtorrent_rakshasa() {
-    if [[ ${libtorrentver} == "0.15.5"  || ${libtorrentver} == "0.15.7" || ${libtorrentver} == "0.16.4" ]]; then
+    if [[ ${libtorrentver} == "0.15.5"  || ${libtorrentver} == "0.15.7" || ${libtorrentver} == "0.16.6" ]]; then
         build_libtorrent_rakshasa_new
     else
         install_libtorrent_stickz
@@ -197,7 +197,7 @@ function install_libtorrent_stickz() {
 }
 
 function build_rtorrent() {
-    if [[ ${rtorrentver} == "0.15.5" || ${rtorrentver} == "0.15.7" || ${rtorrentver} == "0.16.4"  ]]; then
+    if [[ ${rtorrentver} == "0.15.5" || ${rtorrentver} == "0.15.7" || ${rtorrentver} == "0.16.6"  ]]; then
         build_rtorrent_new
     else
         install_rtorrent_stickz
