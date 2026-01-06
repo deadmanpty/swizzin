@@ -102,7 +102,7 @@ if [[ ! -f /etc/nginx/modules-enabled/50-mod-http-fancyindex.conf ]]; then
     mkdir -p /etc/nginx/modules-enabled/
     ln -s /usr/share/nginx/modules-available/mod-http-fancyindex.conf /etc/nginx/modules-enabled/50-mod-http-fancyindex.conf
 fi
-sed -i -e "s/worker_connections 768/worker_connections 2048/" /etc/nginx/nginx.conf
+sed -i -e "s/worker_connections 768/worker_connections 1024/" /etc/nginx/nginx.conf
 
 . /etc/swizzin/sources/functions/php
 phpversion=$(php_service_version)
