@@ -51,7 +51,7 @@ pieces.memory.max.set = 4500M
 system.file.allocate.set = 2
 
 method.set_key = event.download.inserted_new, "schedule2 = ((d.hash)), 0, 0, ((d.save_full_session))"
-schedule2 = init_plugins, 10, 0,
+schedule2 = init_plugins, 5, 0,
 execute2 = {sh,-c,/usr/bin/php /srv/rutorrent/php/initplugins.php ${user} &}
 
 # -- END HERE --
