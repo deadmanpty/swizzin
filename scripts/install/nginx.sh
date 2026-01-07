@@ -82,7 +82,7 @@ cd /etc/php
 phpv=$(ls -d */ | cut -d/ -f1)
 echo_progress_start "Making adjustments to PHP"
 for version in $phpv; do
-    sed -i -e "s/post_max_size = 8M/post_max_size = 128M/" \
+    sed -i -e "s/post_max_size = 8M/post_max_size = 120M/" \
         -e "s/upload_max_filesize = 2M/upload_max_filesize = 96M/" \
         -e "s/expose_php = On/expose_php = Off/" \
         -e "s/max_execution_time = 30/max_execution_time = 60/" \
@@ -117,8 +117,8 @@ server {
   listen 80 default_server;
   listen [::]:80 default_server;
   server_name _;
-  client_max_body_size 64M;
-  client_body_buffer_size 256k;
+  client_max_body_size 80M;
+  client_body_buffer_size 512k;
   server_tokens off;
 
   location /.well-known {
@@ -141,8 +141,8 @@ server {
   ssl_certificate /etc/ssl/certs/ssl-cert-snakeoil.pem;
   ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
   include snippets/ssl-params.conf;
-  client_max_body_size 64M;
-  client_body_buffer_size 256k;
+  client_max_body_size 80M;
+  client_body_buffer_size 512k;
   server_tokens off;
   root /srv/;
 
@@ -179,8 +179,8 @@ ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 SSC
 
 cat > /etc/nginx/snippets/proxy.conf << PROX
-client_max_body_size 64m;
-client_body_buffer_size 256k;
+client_max_body_size 80m;
+client_body_buffer_size 512k;
 
 #Timeout if the real server is dead
 proxy_next_upstream error timeout invalid_header http_500 http_502 http_503;
@@ -201,7 +201,7 @@ proxy_http_version 1.1;
 proxy_set_header Connection "";
 proxy_cache_bypass \$cookie_session;
 proxy_no_cache \$cookie_session;
-proxy_buffers 48 4k;
+proxy_buffers 32 4k;
 PROX
 echo_progress_done "Config installed"
 
