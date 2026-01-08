@@ -21,7 +21,7 @@ execute.nothrow = chmod,777,/home/${user}/.config/rpc.socket
 execute.nothrow = chmod,777,/home/${user}/.sessions
 network.scgi.open_local = /var/run/${user}/.rtorrent.sock
 schedule2 = chmod_scgi_socket, 0, 0, "execute2=chmod,\"g+w,o=\",/var/run/${user}/.rtorrent.sock"
-schedule2 = watch_directory,5,5,load.start=/home/${user}/rwatch/*.torrent
+schedule = watch_directory,5,5,load.start=/home/${user}/rwatch/*.torrent
 session.path.set = /home/${user}/.sessions/
 throttle.global_down.max_rate.set = 0
 throttle.global_up.max_rate.set = 0
@@ -52,8 +52,9 @@ pieces.memory.max.set = 4500M
 system.file.allocate.set = 2
 
 method.set_key = event.download.inserted_new, "schedule2 = ((d.hash)), 0, 0, ((d.save_full_session))"
-execute2 = {sh,-c,/usr/bin/php /srv/rutorrent/php/initplugins.php ${user} &}
-schedule2 = init_plugins, 5, 0,
+# method.set_key = event.download.inserted, 2_save_session, ((d.save_full_session))
+schedule2 = session_save, 1200, 3600, ((session.save))
+schedule2 = init_plugins, 5, 0, "execute2 = {sh,-c,/usr/bin/php /srv/rutorrent/php/initplugins.php ${user} &}"
 
 # -- END HERE --
 EOF
