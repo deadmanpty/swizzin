@@ -215,8 +215,8 @@ function _preparation() {
         exit 1
     fi
 
-    nofile=$(grep "DefaultLimitNOFILE=2097152" /etc/systemd/system.conf)
-    if [[ ! "$nofile" ]]; then echo "DefaultLimitNOFILE=2097152" >> /etc/systemd/system.conf; fi
+    nofile=$(grep "DefaultLimitNOFILE=1048576" /etc/systemd/system.conf)
+    if [[ ! "$nofile" ]]; then echo "DefaultLimitNOFILE=1048576" >> /etc/systemd/system.conf; fi
     echo_progress_done "Setup succesful"
     echo
 }
