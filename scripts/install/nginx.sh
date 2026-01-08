@@ -82,10 +82,11 @@ cd /etc/php
 phpv=$(ls -d */ | cut -d/ -f1)
 echo_progress_start "Making adjustments to PHP"
 for version in $phpv; do
-    sed -i -e "s/post_max_size = 8M/post_max_size = 120M/" \
+    sed -i -e "s/post_max_size = 8M/post_max_size = 192M/" \
         -e "s/upload_max_filesize = 2M/upload_max_filesize = 96M/" \
         -e "s/expose_php = On/expose_php = Off/" \
-        -e "s/max_execution_time = 30/max_execution_time = 60/" \
+        -e "s/max_execution_time = 30/max_execution_time = 120/" \
+        -e "s/max_input_time = 60/max_execution_time = 120/" \
         -e "s/128M/1152M/" \
         -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" \
         -e "s/;opcache.enable=1/opcache.enable=1/" \
@@ -117,7 +118,7 @@ server {
   listen 80 default_server;
   listen [::]:80 default_server;
   server_name _;
-  client_max_body_size 80M;
+  client_max_body_size 96M;
   client_body_buffer_size 512k;
   server_tokens off;
 
@@ -141,7 +142,7 @@ server {
   ssl_certificate /etc/ssl/certs/ssl-cert-snakeoil.pem;
   ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
   include snippets/ssl-params.conf;
-  client_max_body_size 80M;
+  client_max_body_size 96M;
   client_body_buffer_size 512k;
   server_tokens off;
   root /srv/;
@@ -179,7 +180,7 @@ ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 SSC
 
 cat > /etc/nginx/snippets/proxy.conf << PROX
-client_max_body_size 80m;
+client_max_body_size 96m;
 client_body_buffer_size 512k;
 
 #Timeout if the real server is dead
