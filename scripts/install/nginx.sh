@@ -62,7 +62,7 @@ touch $templog
 openssl dhparam -out dhparam.pem 2048 >> $templog 2>&1 &
 
 # Install packages for nginx in the foreground, remove libnginx-mod-http-fancyindex for nginx v1.30
-APT="nginx libnginx-mod-http-fancyindex subversion ssl-cert php-fpm libfcgi0ldbl php-cli php-dev php-xml php-curl php-xmlrpc php-json php-mbstring php-opcache php-zip php-bcmath ${geoip} ${mcrypt}"
+APT="nginx nginx-extras subversion ssl-cert php-fpm libfcgi0ldbl php-cli php-dev php-xml php-curl php-xmlrpc php-json php-mbstring php-opcache php-zip php-bcmath ${geoip} ${mcrypt}"
 # APT="nginx libnginx-mod-http-fancyindex subversion ssl-cert php8.4-fpm libfcgi0ldbl php8.4-cli php8.4-dev php8.4-xml php8.4-curl php8.4-xmlrpc php8.4-mbstring php8.4-opcache php8.4-zip php8.4-bcmath ${geoip} ${mcrypt}"
 # APT="nginx libnginx-mod-http-fancyindexsubversion ssl-cert php8.5-fpm libfcgi0ldbl php8.5-cli php8.5-dev php8.5-xml php8.5-curl php8.5-xmlrpc php8.5-mbstring php8.5-zip php8.5-bcmath ${geoip} ${mcrypt}"
 # APT="nginx libnginx-mod-http-fancyindex subversion ssl-cert php-fpm libfcgi0ldbl php-cli php-dev php-xml php-curl php-xmlrpc php-json php-mbstring php-zip php-bcmath ${geoip} ${mcrypt}"
