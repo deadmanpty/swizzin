@@ -26,13 +26,13 @@ session.path.set = /home/${user}/.sessions/
 throttle.global_down.max_rate.set = 0
 throttle.global_up.max_rate.set = 0
 throttle.max_downloads.global.set = 200
-throttle.max_uploads.global.set = 200
+throttle.max_uploads.global.set = 400
 throttle.max_peers.normal.set = 40
 throttle.min_peers.normal.set = 1
 throttle.max_peers.seed.set = -1
 throttle.min_peers.seed.set = -1
-throttle.max_downloads.set = 20
-throttle.max_uploads.set = 20
+throttle.max_downloads.set = 40
+throttle.max_uploads.set = 40
 trackers.numwant.set = 40
 network.port_range.set = 48160-50160
 network.port_random.set = yes
@@ -41,9 +41,9 @@ protocol.pex.set = no
 trackers.use_udp.set = yes
 trackers.delay_scrape.set = yes
 network.tos.set = throughput
-network.max_open_files.set = 16000
-network.max_open_sockets.set = 400
-network.http.max_open.set = 100
+network.max_open_files.set = 4096
+network.max_open_sockets.set = 1024
+network.http.max_open.set = 64
 network.xmlrpc.size_limit.set = 32M
 pieces.hash.on_completion.set = no
 pieces.preload.type.set = 1
@@ -53,7 +53,7 @@ system.file.allocate.set = 2
 
 method.set_key = event.download.inserted_new, "schedule2 = ((d.hash)), 0, 0, ((d.save_full_session))"
 # method.set_key = event.download.inserted, 2_save_session, ((d.save_full_session))
-schedule2 = session_save, 1200, 3600, ((session.save))
+schedule2 = session_save, 600, 1800, ((session.save))
 schedule2 = init_plugins, 5, 0, "execute2 = {sh,-c,/usr/bin/php /srv/rutorrent/php/initplugins.php ${user} &}"
 
 # -- END HERE --
