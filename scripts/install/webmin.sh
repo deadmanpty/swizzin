@@ -17,7 +17,8 @@ _install_webmin() {
 
     cat > /etc/apt/sources.list.d/webmin.list << EOF
 deb [signed-by=/usr/share/keyrings/webmin-archive-keyring.gpg] https://download.webmin.com/download/newkey/repository stable contrib
-EOF    
+EOF
+
     echo_progress_done "Repo added"
     apt_update
     apt install webmin --install-recommends -y
