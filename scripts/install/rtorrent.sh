@@ -48,7 +48,7 @@ network.xmlrpc.size_limit.set = 32M
 pieces.hash.on_completion.set = no
 pieces.preload.type.set = 1
 pieces.preload.min_rate.set = 50000
-pieces.memory.max.set = 4500M
+pieces.memory.max.set = 5500M
 system.file.allocate.set = 2
 
 method.set_key = event.download.inserted_new, "schedule2 = ((d.hash)), 0, 0, ((d.save_full_session))"
