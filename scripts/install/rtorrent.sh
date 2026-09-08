@@ -16,11 +16,11 @@ function _rconf() {
 # -- START HERE --
 ## Instance layout (base paths)
 method.insert = cfg.basedir,  private|const|string, (cat,"/home/${user}/")
-method.insert = cfg.download, private|const|string, (cat,(cfg.basedir),"/home/${user}/torrents/downloads/")
-method.insert = cfg.logs,     private|const|string, (cat,(cfg.basedir),"/home/${user}/rlog/")
+method.insert = cfg.download, private|const|string, (cat,(cfg.basedir),"downloads/")
+method.insert = cfg.logs,     private|const|string, (cat,(cfg.basedir),"log/")
 method.insert = cfg.logfile,  private|const|string, (cat,(cfg.logs),"rtorrent-",(system.time),".log")
-method.insert = cfg.session,  private|const|string, (cat,(cfg.basedir),"/home/${user}/.sessions/")
-method.insert = cfg.watch,    private|const|string, (cat,(cfg.basedir),"/home/${user}/rwatch/")
+method.insert = cfg.session,  private|const|string, (cat,(cfg.basedir),".session/")
+method.insert = cfg.watch,    private|const|string, (cat,(cfg.basedir),"watch/")
 method.insert = socket.path,  private|const|string, (cat,"/var/run/${user}/")
 
 execute.nothrow = chmod,777,/home/${user}/.config/rpc.socket
@@ -139,11 +139,11 @@ EOF
 }
 
 function _makedirs() {
-    mkdir -p /home/${user}/torrents/downloads 2>> $log
-    mkdir -p /home/${user}/.sessions
-    mkdir -p /home/${user}/rlog
-    mkdir -p /home/${user}/rwatch
-    chown -R ${user}:${user} /home/${user}/{torrents,.sessions,rlog,rwatch} 2>> $log
+    #mkdir -p /home/${user}/torrents/downloads 2>> $log
+    #mkdir -p /home/${user}/.sessions
+    #mkdir -p /home/${user}/rlog
+    #mkdir -p /home/${user}/rwatch
+    #chown -R ${user}:${user} /home/${user}/{torrents,.sessions,rlog,rwatch} 2>> $log
     usermod -a -G www-data ${user} 2>> $log
     usermod -a -G ${user} www-data 2>> $log
 }
