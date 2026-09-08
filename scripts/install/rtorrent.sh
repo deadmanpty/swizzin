@@ -122,7 +122,6 @@ schedule = watch_start, 10, 10, ((load.start_verbose, (cat, (cfg.watch), "start/
 ## (and control via XMLRPC sockets)
 system.daemon.set = true
 network.scgi.open_local = (cat,(socket.path),rpc.socket)
-execute.nothrow = chmod,770,(cat,(socket.path),rpc.socket)
 
 ## Logging:
 ##   Levels = critical error warn notice info debug
