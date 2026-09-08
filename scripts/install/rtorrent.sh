@@ -65,7 +65,7 @@ function _makedirs() {
     mkdir -p /home/${user}/downloads 2>> $log
     mkdir -p /home/${user}/.sessions
     mkdir -p /home/${user}/rwatch
-    chown -R ${user}:${user} /home/${user}/{torrents,.sessions,rwatch} 2>> $log
+    chown -R ${user}:${user} /home/${user}/{downloads,.sessions,rwatch} 2>> $log
     usermod -a -G www-data ${user} 2>> $log
     usermod -a -G ${user} www-data 2>> $log
 }
