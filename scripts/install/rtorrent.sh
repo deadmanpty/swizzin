@@ -15,13 +15,13 @@ function _rconf() {
     cat > /home/${user}/.rtorrent.rc << EOF
 # -- START HERE --
 ## Instance layout (base paths)
-method.insert = cfg.basedir,  private|const|string, (cat,"/home/${user}/rtorrent/")
-method.insert = cfg.download, private|const|string, (cat,(cfg.basedir),"downloads/")
-method.insert = cfg.logs,     private|const|string, (cat,(cfg.basedir),"log/")
+method.insert = cfg.basedir,  private|const|string, (cat,"/home/${user}/")
+method.insert = cfg.download, private|const|string, (cat,(cfg.basedir),"/home/${user}/torrents/downloads/")
+method.insert = cfg.logs,     private|const|string, (cat,(cfg.basedir),"/home/${user}/rlog/")
 method.insert = cfg.logfile,  private|const|string, (cat,(cfg.logs),"rtorrent-",(system.time),".log")
-method.insert = cfg.session,  private|const|string, (cat,(cfg.basedir),".session/")
-method.insert = cfg.watch,    private|const|string, (cat,(cfg.basedir),"watch/")
-method.insert = socket.path,  private|const|string, (cat,"/run/rtorrent/")
+method.insert = cfg.session,  private|const|string, (cat,(cfg.basedir),"/home/${user}/.sessions/")
+method.insert = cfg.watch,    private|const|string, (cat,(cfg.basedir),"/home/${user}/rwatch/")
+method.insert = socket.path,  private|const|string, (cat,"/var/run/${user}/")
 
 ## Create instance directories
 execute.throw = sh, -c, (cat,\
@@ -121,6 +121,7 @@ schedule = watch_start, 10, 10, ((load.start_verbose, (cat, (cfg.watch), "start/
 system.daemon.set = true
 network.scgi.open_local = (cat,(socket.path),rpc.socket)
 execute.nothrow = chmod,770,(cat,(socket.path),rpc.socket)
+execute.nothrow = chmod,777,/home/${user}/.config/rpc.socket
 
 ## Logging:
 ##   Levels = critical error warn notice info debug
@@ -140,8 +141,9 @@ EOF
 function _makedirs() {
     mkdir -p /home/${user}/torrents/downloads 2>> $log
     mkdir -p /home/${user}/.sessions
+    mkdir -p /home/${user}/rlog
     mkdir -p /home/${user}/rwatch
-    chown -R ${user}:${user} /home/${user}/{torrents,.sessions,rwatch} 2>> $log
+    chown -R ${user}:${user} /home/${user}/{torrents,.sessions,rlog,rwatch} 2>> $log
     usermod -a -G www-data ${user} 2>> $log
     usermod -a -G ${user} www-data 2>> $log
 }
@@ -156,7 +158,7 @@ After=network.target
 Type=forking
 KillMode=none
 User=%i
-ExecStartPre=-/bin/rm -f /home/%i/.sessions/rtorrent.lock
+ExecStartPre=-/bin/rm -f /home/%i/.session/rtorrent.lock
 ExecStart=/usr/bin/screen -d -m -fa -S rtorrent /usr/bin/rtorrent
 ExecStop=/usr/bin/screen -X -S rtorrent quit
 WorkingDirectory=/home/%i/
