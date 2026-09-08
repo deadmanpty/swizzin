@@ -23,6 +23,8 @@ method.insert = cfg.session,  private|const|string, (cat,(cfg.basedir),"/home/${
 method.insert = cfg.watch,    private|const|string, (cat,(cfg.basedir),"/home/${user}/rwatch/")
 method.insert = socket.path,  private|const|string, (cat,"/var/run/${user}/")
 
+execute.nothrow = chmod,777,/home/${user}/.config/rpc.socket
+
 ## Create instance directories
 execute.throw = sh, -c, (cat,\
     "mkdir -p \"",(cfg.download),"\" ",\
@@ -121,7 +123,6 @@ schedule = watch_start, 10, 10, ((load.start_verbose, (cat, (cfg.watch), "start/
 system.daemon.set = true
 network.scgi.open_local = (cat,(socket.path),rpc.socket)
 execute.nothrow = chmod,770,(cat,(socket.path),rpc.socket)
-execute.nothrow = chmod,777,/home/${user}/.config/rpc.socket
 
 ## Logging:
 ##   Levels = critical error warn notice info debug
